@@ -29,7 +29,7 @@ const cookieParser = require('cookie-parser');
 
 const MONGODB_URI = `mongodb+srv://${process.env.MONGO_USER}:${
   process.env.MONGO_PASSWORD
-}@rolgamesandstone.tqgnl5u.mongodb.net/bakery_app?retryWrites=true&w=majority&appName=RolgameSandstone`;
+}@rolgamesandstone.tqgnl5u.mongodb.net/lapab?retryWrites=true&w=majority&appName=RolgameSandstone`;
 
 const store = new MongoDBStore({
     uri: MONGODB_URI,
