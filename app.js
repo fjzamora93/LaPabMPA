@@ -211,6 +211,7 @@ app.use('/api', apiRoutes);
 app.use(pdfRoutes);
 app.use(authRoutes);
 
+
 //ERROR HANDLING
 app.get('/500', errorController.get500);
 app.use(errorController.get404);

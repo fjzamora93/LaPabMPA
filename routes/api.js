@@ -32,10 +32,10 @@ router.post('/user/signup', apiController.postSignup);
 router.post('/user/bookmark', apiController.putBookmark);
 
 
-router.get('/user/login', (req, res) => {
-    res.json({ message: 'Petición recibida correctamente!' });
+router.get('/quienes-somos', (req, res) => {
+    res.render('sections/quienes-somos', {
+        pageTitle: 'about',});
 });
-
 
 module.exports = router;
 

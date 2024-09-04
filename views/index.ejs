@@ -1,70 +1,70 @@
 <%- include('includes/navigation.ejs') %>
 
-<link rel="stylesheet" href="/style/index.css">
-
-<body>
-
-
-    <div style="text-align: center; margin: auto;">
-        <form action="/search" method="get" class="search-form">
-            <label for="categoria">Categoría:</label>
-            <select id="categoria" name="categoria" required>
-                <option value="todas">Todas</option>
-                <option value="reposteria">Repostería</option>
-                <option value="verano">Recetas de verano</option>
-                <option value="invierno">Recetas de invierno</option>
-                <option value="no-estacional">Todo el año</option>
-            </select>
     
-            <div class="search-container">
-                <label for="search">Buscar:</label>
-              
-                <input type="text" id="search" name="search" placeholder="Introduce tu búsqueda" 
-                    value="<%= typeof search !== 'undefined' ? search : '' %>">
-                <span class="search-icon">
-                    <img src="https://img.icons8.com/material-outlined/24/000000/search.png" alt="Buscar">
-                </span>
-            </div>
     
-            <input type="submit" value="Buscar">
-        </form>
+
+<!--- BODY (CUERPO DE LA PÁGINA)-->
+<body class="body-index">
+    
+    
+    <div class="titular-section"  id="titular-1">
+        <h2 > Nuestro Proyecto </h2>
     </div>
 
+    <section class = "index-section"  id="section-1">
+        <h4> Resolver desafíos ambientales del mundo real a menudo requiere enfoques novedosos e interdisciplinarios que desafíen los límites académicos tradicionales y se adentren en la ecología, geografía, matemáticas aplicadas o ciencias de los sistemas marinos.</h4>
+            <p>Nos dedicamos al estudio de la dinámica poblacional y la distribución biogeográfica de focas y otras especies marinas antárticas, centrándonos especialmente en comprender las condiciones oceanográficas, 
+                los efectos del cambio climático y las actividades humanas como la pesca y el turismo en la región. 
+                Estudios adicionales en curso en el laboratorio incluyen investigaciones sobre el comportamiento de las focas, 
+                genética, hormonas del estrés y uso del hábitat.</p>
 
-    <div class="container" id="main">
-        <% for (let receta of recetas) { %>
-            <a href="/recipe-details/<%= receta._id %>">
-                <div class="recipe-summary">
-                
-                    <img src="<%= receta.image %>" alt="<%= receta.image %>">
+            <p> Adicionalmente, cubrimos otras áreas como la dinámica poblacional de los pingüinos, especialmente la distribución de las especies de pigoscélidos Papúa, Adelia y Barbijo , así como las olas de calor mairnas.</p>
+            
+    </section>
 
-                    
+    <aside>
+        <button id="button-show" > </button>
+        <div id="mostrar" style="display:inline-block">
+        <ul class="papers">
+            <h2>Projects and investigations</h2>
+            <li><a href="investigation/abstract2017_INI_eng.pdf"> Filling the gap: characterization of winter hydrographic 
+                conditions and habitat use in the Northern Antarctic Peninsula 
+                using instrumented seals and ocean modeling </a></li>
+            <li><a href="investigation/Abstract_REG_eng_Pinones.pdf"> Exploring the spatial and temporal extension of modified Circumpolar 
+                Deep Water Intrusions into a coastal Antarctic embayment: a 
+                combination of ocean modeling and observations </a></li>
+            <li><a href="investigation/SubT_vers_10March24.pdf"> Local and remote atmosphere-ocean coupling during extreme warming events 
+                2 impacting subtidal ocean temperature in an Antarctic embaymen </a></li>
+        </ul>
+        </div>
+    </aside>
 
-                    <h2> 
-                        <% if (isAuthenticated) { %>
-                            <form method="post" action="/add-bookmark" class="favoritos">
-                                <input type="hidden" name="idReceta" value = "<%= receta._id %>">
-                                <input type="hidden" name="_csrf" value="<%= csrfToken %>">
-                                <button type="submit" class="bakery-button">
-                                    <i class="fas fa-heart"></i> 
-                                </button>
-                            </form>
-                        <% } %>
-                        <%= receta.nombre %> 
-                    </h2>
-                    <p><b>Descripción:</b> <%= receta.descripcion %></p>
-                    <p><b>Tiempo:</b> <%= receta.tiempo %></p>
-                    <p><b>Dificultad:</b> <%= receta.dificultad %></p>
 
-                    
-                </div>
-            </a>
-        <% } %>
+    <div class="titular-section" id="titular-2" >
+        <h2 > Metodología de investigación </h2>
     </div>
-
-    <%- include('includes/pagination.ejs', {currentPage: currentPage, nextPage: nextPage, previousPage: previousPage, lastPage: lastPage, hasNextPage: hasNextPage, hasPreviousPage: hasPreviousPage}) %>
+    <section class = "index-section" >
+        <h4> Estamos activamente involucrados en el desarrollo de métodos novedosos para el estudio de la vida silvestre, incluyendo el uso de imágenes satelitales, visión por computadora y drones aéreos para investigar la vida silvestre en áreas remotas. 
+        </h4>
+        <p>
+            Nuestros esfuerzos altamente interdisciplinarios involucran a estudiantes y postdoctorados de ecología, ciencias marinas, matemáticas aplicadas y estadísticas, ciencias de la computación, 
+            ingeniería eléctrica e informática, lo que nos permite adoptar un enfoque "full stack" integral 
+            para la ecología antártica que vincula la investigación de campo antártica con el análisis estadístico 
+            y la curación de datos, hasta el desarrollo e implementación de herramientas de apoyo a decisiones 
+            y aplicaciones para la comunidad de interesados en la Antártida.
+        </p>
+    </section>
+ 
+    <div id="grid-container">
+        <div class="large"><img src="images/resource/antartica-7.jpg"></div>
+        <div><img src="images/resource/antartica-6.jpg"></div>
+        <div><img src="images/resource/antartica-2.jpg"></div>
+        <div><img src="images/resource/antartica-18.jpg"></div>
+        <div><img src="images/resource/antartica-8.jpg"></div>
+        <div><img src="images/resource/antartica-5.jpg"></div>
+    </div>
+            
 
 <%- include('includes/footer') %>
 </body>
 </html>
-

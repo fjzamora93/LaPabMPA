@@ -8,6 +8,45 @@ const apiController = require('../controllers/api');
 //recuerda que user parte desde la ruta principal, no tiene una propia como la tiene admin
 
 router.get('/', userController.getIndex);
+router.get('/index', userController.getIndex);
+
+
+router.get('/quienes-somos', (req, res) => {
+    res.render('sections/quienes-somos', {
+        pageTitle: 'Home',});
+});
+
+router.get('/calendario', (req, res) => {
+    res.render('sections/calendario', {
+        pageTitle: 'Home',});
+});
+
+router.get('/equipo', (req, res) => {
+    res.render('sections/equipo', {
+        pageTitle: 'Home',});
+});
+
+router.get('/congreso', (req, res) => {
+    res.render('sections/congreso', {
+        pageTitle: 'Home',});
+});
+
+router.get('/proyectos', (req, res) => {
+    res.render('sections/congreso', {
+        pageTitle: 'Home',});
+});
+
+router.get('/contacto', (req, res) => {
+    res.render('sections/contacto', {
+        pageTitle: 'Home',});
+});
+
+router.get('/noticias', (req, res) => {
+    res.render('sections/noticias', {
+        pageTitle: 'Home',});
+});
+
+
 router.get('/recipe-details/:recetaId', userController.getRecipeDetails);
 
 //Los controllers se ejecutarán en orden. Si el primero da el NEXT (porque está autentificado el usuario), pasará al siguiente

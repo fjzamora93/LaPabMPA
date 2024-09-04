@@ -1,0 +1,72 @@
+<%- include('../includes/navigation.ejs') %>
+
+<body>
+    <div class="contenedor-somos">
+        <div class="imagenes-somos">
+            <div><img src="img/corporate/team-0.jpg" alt="equipo-img"></div>
+            <div><img src="img/corporate/team-1.jpg" alt="equipo-img"></div>
+            <div><img src="img/corporate/team-3.jpg" alt="equipo-img"></div>
+            <div><img src="img/corporate/team-2.jpg" alt="equipo-img"></div>
+            <div class="ocultar-small-screen"><img src="img/corporate/team-4.jpg" alt="equipo-img"></div>
+            <div class="ocultar-small-screen"><img src="img/corporate/team-5.jpg" alt="equipo-img"></div>
+            <div class="ocultar-small-screen"><img src="img/corporate/team-6.jpg" alt="equipo-img"></div>
+        </div>
+
+        <h1>¿Quiénes somos?</h1>
+        <section class = "index-section"  >
+            <h4>  LaPAB, el equipo detrás de los proyectos mencionados, está comprometido con la investigación oceanográfica en la región antártica. A través de proyectos como Fondecyt y Fondesit Regular, se dedican a comprender cómo las intrusiones de agua circumpolar profunda (CDW) afectan los sistemas costeros antárticos y las condiciones oceanográficas durante el invierno.
+            </h4>
+                <p>Estudiamos la dinámica poblacional y la distribución biogeográfica de pingüinos y otras aves marinas antárticas, con un enfoque particular en comprender los efectos del cambio climático, la pesca y el turismo. 
+                    Estudios adicionales en curso en el laboratorio incluyen investigaciones sobre el comportamiento de los pingüinos, genética, hormonas del estrés y uso del hábitat.</p>
+                <p>
+                    En el proyecto Fondecyt, LaPAB se centró en medir las corrientes marinas para verificar el movimiento de CDW hacia las regiones costeras de la Antártida. Identificaron con éxito el flujo de agua en la bahía y se propusieron medir si efectivamente el agua circumpolar profunda ingresaba o salía del punto identificado. Esta investigación es crucial porque el CDW desempeña un papel importante en la regulación de la temperatura, el balance de sal y nutrientes, y en la producción biológica en la plataforma continental antártica.
+                </p>
+                <p>
+                    Por otro lado, el proyecto Fondesit Regular busca entender las condiciones oceanográficas durante el invierno, un período difícil de acceder y recabar datos en la Antártida. LaPAB utiliza focas de wedel instrumentadas con GPS y sensores de fluorescencia para recopilar información sobre el ambiente y su productividad durante el invierno. Además, este proyecto incluye una parte de modelación para extrapolar los datos obtenidos y entender el hábitat y la utilización del espacio por las focas durante el invierno.
+                </p>
+                <p>
+                    En resumen, LaPAB se dedica a investigar y comprender la dinámica oceanográfica en la región antártica, utilizando una variedad de métodos y tecnologías para estudiar el impacto del CDW y las condiciones durante el invierno en el ecosistema marino.
+                </p> 
+            </section>
+    </div>
+
+</body>
+
+<!--- FOOTER (PIE DE PÁGINA)-->
+<footer style="color: rgb(77, 74, 74)" id="footer">
+    <div>
+        <img class="logo" src="img/icon/logo-lapab-black-txt.png" alt="Logo"> 
+        <div class="footer-social">
+            <a href=""><img src="img/iconos footer/github-icon-2.svg" alt="Github"></a>
+            <a href=""><img src="img/iconos footer/twitter_5969020.png" alt="Twitter"></a>
+            <a href="https://www.instagram.com/lapab_uach/" target="_blank"><img src="img/iconos footer/instagram_2111463.png" alt="Instagram"></a>
+            <a href=""><img src="img/iconos footer/linkedin_2504923.png" alt="LinkedIn"></a>
+        </div>
+    </div>
+    <div >
+        <h3>Contacto</h3><br>
+        Laboratorio de Procesos Acoplados Biofísicos
+        IP: Andrea Piñones
+        <br> Email: andrea.pinones@uach.cl
+        <br> Instituto de Ciencias Marinas y Limnológicas
+        <br> Universidad Austral de Chile (UACh)
+        <br> Avda Rector Eduardo Morales Miranda 23, Valdivia, Región de los Ríos.
+        <p >©LaPAB | Designed & Developed by UNIR 1ºDAM Grupo 3 </p>
+        <div class="footer-links">
+            <a href="#footer" onclick = "avisoLegal()">Politica de Privacidad -</a>
+            <a href="#footer" onclick="cookies()">Politica de Cookies</a>
+        </div>
+    </div>
+    <div class="maps">
+        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3064.9844555811674!2d-73.25281368334542!3d-39.80734047736594!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x9615eddda9759d8f%3A0x372d280226093c64!2sEdificio%20Emilio%20Pug%C3%ADn%2C%20Facultad%20de%20Ciencias%2C%20UACh!5e0!3m2!1ses!2scl!4v1714431373219!5m2!1ses!2scl" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+    </div>
+    <script>
+        function cookies() {
+            alert("Soy una cookie molesta... ¡Acéptame!");
+        }
+        function avisoLegal() {
+            alert("La protección de datos es importante.");
+        }
+    </script>
+</footer>
+</html>
