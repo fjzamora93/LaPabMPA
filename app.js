@@ -27,13 +27,13 @@ const flash = require('connect-flash');
 const cors = require('cors');
 const cookieParser = require('cookie-parser');
 
-const MONGODB_URI = `mongodb+srv://${process.env.MONGO_USER}:${
-  process.env.MONGO_PASSWORD
-}@rolgamesandstone.tqgnl5u.mongodb.net/lapab?retryWrites=true&w=majority&appName=RolgameSandstone`;
+const MONGODB_URI = `mongodb+srv://elgatobarista:${
+    process.env.MONGO_PASSWORD}@rolgamesandstone.tqgnl5u.mongodb.net/?retryWrites=true&w=majority&appName=RolgameSandstone`;
+
 
 const store = new MongoDBStore({
     uri: MONGODB_URI,
-    collection: 'sessions'
+    collection: 'lapab'
 });
 
 store.on('error', function(error) {
