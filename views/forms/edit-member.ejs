@@ -1,0 +1,99 @@
+<link rel="stylesheet" href="/style/form.css">
+<script src="/javascript/scripts.js"></script>
+
+<body>
+    <%- include('../includes/navigation.ejs') %>
+
+    <div class="container">
+        <% if (errorMessage) { %>
+            <div class="user-message user-message--error"><%= errorMessage %></div>
+        <% } %>
+
+        <h2>Añadir Nuevo Miembro</h2>
+        <form action="/admin/<% if (editing) { %>edit<% } else { %>add<% } %>" method="post" enctype="multipart/form-data">
+
+            <!-- Ocultamos la id para después usarla -->
+            <label for="idmember" hidden>Id:</label>
+            <input type="hidden" id="idmember" name="idmember" value="<% if (editing) { %><%= member._id %><% } %>">
+
+            <label for="nombre">Nombre:</label>
+            <input type="text" id="nombre" name="nombre" value="<% if (editing || hasError) { %><%= member.nombre %><% } %>" class="<%= validationErrors.find(e => e.path === 'nombre') ? 'invalid' : '' %>" required>
+            
+            <label for="cargo">Cargo / Ocupación:</label>
+            <input type="text" id="cargo" name="cargo" value="<% if (editing || hasError) { %><%= member.cargo %><% } %>" class="<%= validationErrors.find(e => e.path === 'nombre') ? 'invalid' : '' %>">
+
+            <label for="descripcion">Descripción:</label>
+            <textarea id="descripcion" name="descripcion" rows="5" required><% if (editing || hasError) { %><%= member.descripcion.trim() %><% } %></textarea>
+
+           
+            <div id="bloque-lista">
+                <label for="publicaciones">Publicaciones:</label>
+                <span>Inserta el título de las publicaciones de este miembro. </span>
+                <button type="button" onclick="addClick(this, 'publicaciones')" class="button-add" id="ingr-button">
+                    <i class="fas fa-plus"></i>
+                </button>
+                <% if (editing || hasError) { %>
+                    <% for (let ingr of member.publicaciones) { %>
+                        <input type="text" name="publicaciones[]" value="<%= ingr %>" class="input-list">
+                        <button type="button" onclick="removeClick(this)" class="button-delete" id="ingr-button">-
+                            <i class="fas fa-minus"></i>
+                        </button>
+                    <% } %>
+                <% } else { %>
+                    <input type="text" name="publicaciones[]" value="" 
+                    placeholder="Introduce una publicación" class="input-list">
+                <% } %>
+            </div>
+
+
+            <div class="bloque-lista">
+                <label for="publicaciones">URL de la publicación:</label>
+                <span >
+                    Inserta la URL de las publicaciones (asegúrate de que aparecen en el mismo orden que están arriba)
+                </span>
+                <div id="bloque-lista">
+                    <button type="button" onclick="addClick(this, 'publicaciones')" class="button-add" id="ingr-button">
+                        <i class="fas fa-plus"></i>
+                    </button>
+                    <% if (editing || hasError) { %>
+                        <% for (let instr of member.publicaciones) { %>
+                            <input type="text" name="publicaciones[]" value="<%= instr %>" class="input-list">
+                            <button type="button" onclick="removeClick(this)" class="button-delete" id="ingr-button">
+                                <i class="fas fa-minus"></i>
+                            </button>
+                        <% } %>
+                    <% } else { %>
+                        <input type="text" name="publicaciones[]" value="" 
+                        placeholder="Introduce la primera URL" class="input-list">
+                    <% } %>
+                </div>
+            </div>
+
+            <label for="image">Imagen:</label>
+            <input type="file" name="image" id="image"><br><br><br>
+
+            <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+            
+            <% if (editing) { %>
+                <input type="submit" value="Actualizar member">
+                
+            <% } else { %>
+                <input type="submit" value="Añadir member">
+            <% } %>
+        </form>
+
+        <% if (editing) { %>
+            <form action="/admin/delete/<%= member._id %>" method="post" style="display:inline">
+                <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                <input type="submit" value="Borrar member" class="button-delete">
+            </form>
+        <% } %>
+    
+    </div>
+            
+        
+
+    <%- include('../includes/footer') %>
+
+</body>
+</html>

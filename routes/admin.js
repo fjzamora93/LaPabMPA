@@ -9,8 +9,8 @@ const router = express.Router();
 
 router.get('/profile/:idCreator', adminController.getProfile);
 
-router.get('/add-recipe', isAuth, adminController.getAddRecipe);
-router.get('/edit-recipe/:recetaId', adminController.getEditRecipe);
+router.get('/add-member', isAuth, adminController.getAddMember);
+router.get('/edit-member/:memberId', adminController.getEditMember);
 
 router.post('/add', 
     [

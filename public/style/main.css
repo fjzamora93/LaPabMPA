@@ -123,6 +123,30 @@ body p{
     cursor: pointer;;
 }
 
+.button-add, .button-delete{
+    padding: 10px;
+    margin: 20px auto 20px;
+
+    border: none;
+    border-radius: 5px;
+    font-size: 20px;
+    cursor: pointer;
+    width: 50px;
+    display: block;
+}
+
+.button-delete {
+    border: 1px solid black;
+}
+
+.button-delete:hover{
+    border: red 2px solid;
+}
+
+#button-edit{
+    border-radius: 90px;
+    border: rgb(137, 137, 137) 0.5px groove;
+}
 .entrada p{
     margin:5px;
     background-color: rgba(255, 255, 255, 0.5);

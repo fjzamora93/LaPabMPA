@@ -1,11 +1,32 @@
+
+
 body {
     font-family: Arial, sans-serif;
     margin: auto;
     padding: 0;
 }
 
+.button-add, .button-delete{
+    padding: 10px;
+    margin: 10px 0;
+    border: none;
+    border-radius: 5px;
+    font-size: 20px;
+    cursor: pointer;
+    width: 50px;
+    float: right;
+}
+
 .button-delete {
-    background-color: red;
+    border: 1px solid black;
+}
+
+.button-delete:hover{
+    border: red 2px solid;
+}
+
+#bloque-lista{
+    margin-bottom: 20px;
 }
 
 .container {
@@ -22,13 +43,13 @@ h2 {
     color: #f8b400;
 }
 
-form {
-    display: flex;
-    flex-direction: column;
+.input-list{
+    
+    max-width: 80%;
 }
 
 label {
-    margin-top: 20px;
+    margin-top: 30px;
     font-weight: bold;
 }
 

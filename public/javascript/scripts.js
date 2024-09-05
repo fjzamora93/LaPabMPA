@@ -11,7 +11,9 @@ function addClick(button, name) {
     nuevoInput.type = 'text';
     nuevoInput.name = `${name}[]`;
     nuevoInput.required = true;
+    nuevoInput.className = 'input-list';
 
+   
     // Set up the delete button
     deleteButton.innerText = '-';
     deleteButton.className = 'button-delete';

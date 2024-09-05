@@ -38,8 +38,8 @@ exports.getProfile = async (req, res, next) => {
 }
 
 
-exports.getAddRecipe = async (req, res, next) =>{
-    res.render('edit-recipe', {
+exports.getAddMember = async (req, res, next) =>{
+    res.render('forms/edit-member', {
         usuario: req.session.user,
         editing : false,
         hasError: false,
@@ -56,7 +56,7 @@ exports.postAddRecipe = async (req, res, next) => {
     console.log('creatorId:', creatorId, typeof creatorId);
 
     const renderError = (message, validationErrors = []) => {
-        res.status(422).render('edit-recipe', {
+        res.status(422).render('forms/edit-member', {
             editing: false,
             hasError: true,
             receta: { nombre, descripcion, ingredientes, instrucciones, tiempo, dificultad, categoria, creatorId },
@@ -102,18 +102,18 @@ exports.postAddRecipe = async (req, res, next) => {
     }
 };
 
-exports.getEditRecipe = (req, res, next) => {
+exports.getEditMember = (req, res, next) => {
     const recetaId = req.params.recetaId;
     const editing = true;
     RecetaMdb.findById(recetaId)
     .then(receta => {
-        res.render('edit-recipe' , {
+        res.render('forms/edit-member' , {
             receta : receta,
             editing : editing,
             hasError: false,
             errorMessage: null,
             validationErrors: [],
-            usuario: req.session.user // Creator
+            usuario: req.session.user 
         });
         }
     )

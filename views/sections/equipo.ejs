@@ -2,10 +2,32 @@
 
 
 <body>
+
+    
+
     <section class="equipo">
         <h2> Nuestro equipo </h2>
 
+        <% if (locals.isAuthenticated) { %>
+        <a href="/admin/add-member">
+            <div class="opinion" id="equipo-trabajo">
+                    <button type="button" class="button-add" id="ingr-button">
+                        <i class="fas fa-plus"></i>
+                    </button>
+                <h3>Añadir un nuevo miembro</h3><br>
+            </div>
+        </a>
+
+        
+            
+        <% } %>
+
         <div class="opinion" id="equipo-trabajo">
+            <a href="/admin/edit-member/<%= user._id %>" style="float: right">
+                <button type="button" class="button-add" id="button-edit">
+                    <i class="fas fa-edit"></i>
+                </button>
+            </a>
             <img src="images/equipo/andrea.jpg" alt="Foto de la persona" class="foto">
             <h3>Andrea Piñones</h3><br>
             <span> <b>Oceanógrafa PhD. Académica ICML. Investigadora Responsable Proyecto FONDECYT Regular 1210988.</b> <br><br></span>
