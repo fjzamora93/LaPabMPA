@@ -146,14 +146,14 @@ app.use(session({
 
 app.use(csrfProtection); 
 
-// Manejo de errores de CSRF
-app.use((err, req, res, next) => {
-    if (err.code === 'EBADCSRFTOKEN') {
-      res.status(403).json({ error: 'Token CSRF no válido, está interceptando' });
-    } else {
-      next(err);
-    }
-  });
+// // Manejo de errores de CSRF
+// app.use((err, req, res, next) => {
+//     if (err.code === 'EBADCSRFTOKEN') {
+//       res.status(403).json({ error: 'Token CSRF no válido, está interceptando' });
+//     } else {
+//       next(err);
+//     }
+//   });
 
 
 

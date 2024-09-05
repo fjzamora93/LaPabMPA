@@ -22,6 +22,7 @@ exports.getIndex = async (req, res, next) => {
             .sort({ nombre: 1 });
 
         res.render('index', {
+            csrfToken: req.csrfToken(),
             usuario: req.user,
             recetas: products,
             currentPage: page,

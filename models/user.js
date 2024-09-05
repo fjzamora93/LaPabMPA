@@ -11,6 +11,11 @@ const userSchema = new Schema({
   name: {
     type: String,
   },
+  permissionLevel: {
+    type: String,
+    enum: ['user', 'admin', 'superadmin'],
+    default: 'user'
+},
   password: {
     type: String,
     required: true

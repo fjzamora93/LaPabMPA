@@ -18,8 +18,10 @@
 </head>
 
 
+
 <!--- HEADER (CABECERA DE LA PÁGINA)-->
 <header>
+    
     <div>
         <h1>LaPAB</h1>
         <h2>Laboratorio de Procesos Acoplados Biofísicos</h2> 
@@ -29,6 +31,25 @@
 
 <!--- NAV (MENÚ PRINCIPAL)-->
 <nav>
+
+    <% if (!locals.isAuthenticated) { %>
+       
+    <a href="/login">
+        <button id="button-auth">
+            <i class="fas fa-user"></i>
+        </button>
+    </a>
+    <% } else { %>
+
+    <form action="/logout" method="POST" style="margin: 0px">
+        <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+        <button id="button-auth" type="submit">
+            <i class="fas fa-door-open"> </i> 
+        </button>
+        <span style="float:right; margin: 10px;">Bienvenido, <%= locals.user.name %> </span>
+    </form>
+    <% } %>
+
     <ul class = mostrar-moviles >
         <li><a href="#" style="text-decoration:none;" id="button-menu"> Menú </a>
             <ul id="show-menu">
@@ -55,4 +76,6 @@
         <a href="/calendario"><li> Calendario </li></a>
         <!-- <a href="/contacto"><li> Contacto </li></a> -->
     </ul>
+
+    
 </nav>
