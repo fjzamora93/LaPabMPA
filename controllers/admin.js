@@ -48,26 +48,21 @@ exports.getAddMember = async (req, res, next) =>{
     })
 }
 
-exports.postAddRecipe = async (req, res, next) => {
-    const { nombre, descripcion, ingredientes, instrucciones, tiempo, dificultad, categoria } = req.body;
-    const image = req.file;
-
-    const creatorId = req.session.user._id;
-    console.log('creatorId:', creatorId, typeof creatorId);
+exports.postAddUser = async (req, res, next) => {
+    const { name, email, cargo, descripcion, 
+        publicaciones, urlPublicaciones, image, status } = req.body;
+    
 
     const renderError = (message, validationErrors = []) => {
         res.status(422).render('forms/edit-member', {
             editing: false,
             hasError: true,
-            receta: { nombre, descripcion, ingredientes, instrucciones, tiempo, dificultad, categoria, creatorId },
+            user: { name, email, cargo, descripcion, 
+                publicaciones, urlPublicaciones, image},
             errorMessage: message,
             validationErrors
         });
     };
-
-    if (!image) {
-        return renderError('No se ha introducido una imagen');
-    }
 
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
@@ -76,36 +71,37 @@ exports.postAddRecipe = async (req, res, next) => {
     }
 
     try {
-        const imgurLink = await uploadImageToImgur(image.path);
-  
-        console.log('Imagen subida a Imgur:', imgurLink);
+        // const imgurLink = await uploadImageToImgur(image.path);
 
-        const recipeMg = new RecetaMdb({
-            nombre, descripcion, ingredientes, instrucciones, tiempo, dificultad, categoria, 
-            image: imgurLink, 
-            creator:creatorId
+        const password = email;
+        const permissionLevel = 'user';
+
+        const posts = publicaciones.map((publicacion, index) => {
+            return { title: publicacion, url: urlPublicaciones[index] };
+        });
+        console.log('posts:', posts);
+
+        const newUser = new User({
+            email, name, permissionLevel,  password, cargo,
+            descripcion, 
+            posts, image, status
         });
 
-        const savedRecipe = await recipeMg.save();
-        console.log('Receta guardada con éxito:', savedRecipe);
+        const savedUser = await newUser.save();
+        console.log('Usuario guardado con éxito:', savedUser);
 
-        // Añadir la referencia de la receta al array de recetas del usuario
-        const user = await User.findById(creatorId);
-        console.log('ERROR DE USUARIO:', user)
-        user.recipes.push(savedRecipe._id);
-        await user.save();
         res.redirect('/');
 
     } catch (error) {
-        console.error('Error al cargar la imagen a Imgur:', error);
-        renderError('Error al cargar la imagen a Imgur');
+        console.error('Error al subir algo:', error);
+        renderError('Error al subir algo');
     }
 };
 
 exports.getEditMember = (req, res, next) => {
-    const recetaId = req.params.recetaId;
+    const memberId = req.params.recetaId;
     const editing = true;
-    RecetaMdb.findById(recetaId)
+    RecetaMdb.findById(memberId)
     .then(receta => {
         res.render('forms/edit-member' , {
             receta : receta,

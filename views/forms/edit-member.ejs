@@ -13,17 +13,23 @@
         <form action="/admin/<% if (editing) { %>edit<% } else { %>add<% } %>" method="post" enctype="multipart/form-data">
 
             <!-- Ocultamos la id para después usarla -->
-            <label for="idmember" hidden>Id:</label>
-            <input type="hidden" id="idmember" name="idmember" value="<% if (editing) { %><%= member._id %><% } %>">
+            <label for="idUser" hidden>Id:</label>
+            <input type="hidden" id="idUser" name="idUser" value="<% if (editing) { %><%= user._id %><% } %>">
 
-            <label for="nombre">Nombre:</label>
-            <input type="text" id="nombre" name="nombre" value="<% if (editing || hasError) { %><%= member.nombre %><% } %>" class="<%= validationErrors.find(e => e.path === 'nombre') ? 'invalid' : '' %>" required>
+            <label for="name">Nombre completo:</label>
+            <input type="text" id="name" name="name" value="<% if (editing || hasError) { %><%= user.name %><% } %>" class="<%= validationErrors.find(e => e.path === 'name') ? 'invalid' : '' %>" required>
             
+            <label for="email">Email :</label>
+            <input type="text" id="email" name="email" 
+                value="<% if (editing || hasError) { %><%= user.email %><% } %>" 
+                class="<%= validationErrors.find(e => e.path === 'email') ? 'invalid' : '' %>"
+            >
+
             <label for="cargo">Cargo / Ocupación:</label>
-            <input type="text" id="cargo" name="cargo" value="<% if (editing || hasError) { %><%= member.cargo %><% } %>" class="<%= validationErrors.find(e => e.path === 'nombre') ? 'invalid' : '' %>">
+            <input type="text" id="cargo" name="cargo" value="<% if (editing || hasError) { %><%= user.cargo %><% } %>" class="<%= validationErrors.find(e => e.path === 'cargo') ? 'invalid' : '' %>">
 
             <label for="descripcion">Descripción:</label>
-            <textarea id="descripcion" name="descripcion" rows="5" required><% if (editing || hasError) { %><%= member.descripcion.trim() %><% } %></textarea>
+            <textarea id="descripcion" name="descripcion" rows="5" required><% if (editing || hasError) { %><%= user.descripcion.trim() %><% } %></textarea>
 
            
             <div id="bloque-lista">
@@ -32,9 +38,9 @@
                 <button type="button" onclick="addClick(this, 'publicaciones')" class="button-add" id="ingr-button">
                     <i class="fas fa-plus"></i>
                 </button>
-                <% if (editing || hasError) { %>
-                    <% for (let ingr of member.publicaciones) { %>
-                        <input type="text" name="publicaciones[]" value="<%= ingr %>" class="input-list">
+                <% if (editing ) { %>
+                    <% for (let post of user.posts) { %>
+                        <input type="text" name="publicaciones[]" value="<%= post.title %>" class="input-list">
                         <button type="button" onclick="removeClick(this)" class="button-delete" id="ingr-button">-
                             <i class="fas fa-minus"></i>
                         </button>
@@ -47,45 +53,57 @@
 
 
             <div class="bloque-lista">
-                <label for="publicaciones">URL de la publicación:</label>
+                <label for="urlPublicaciones">URL de la publicación:</label>
                 <span >
                     Inserta la URL de las publicaciones (asegúrate de que aparecen en el mismo orden que están arriba)
                 </span>
                 <div id="bloque-lista">
-                    <button type="button" onclick="addClick(this, 'publicaciones')" class="button-add" id="ingr-button">
+                    <button type="button" onclick="addClick(this, 'urlPublicaciones')" class="button-add" id="ingr-button">
                         <i class="fas fa-plus"></i>
                     </button>
-                    <% if (editing || hasError) { %>
-                        <% for (let instr of member.publicaciones) { %>
-                            <input type="text" name="publicaciones[]" value="<%= instr %>" class="input-list">
+                    <% if (editing ) { %>
+                        <% for (let post of user.posts) { %>
+                            <input type="text" name="urlPublicaciones[]" value="<%= post.url %>" class="input-list">
                             <button type="button" onclick="removeClick(this)" class="button-delete" id="ingr-button">
                                 <i class="fas fa-minus"></i>
                             </button>
                         <% } %>
                     <% } else { %>
-                        <input type="text" name="publicaciones[]" value="" 
+                        <input type="text" name="urlPublicaciones[]" value="" 
                         placeholder="Introduce la primera URL" class="input-list">
                     <% } %>
                 </div>
             </div>
 
-            <label for="image">Imagen:</label>
-            <input type="file" name="image" id="image"><br><br><br>
+            <!-- <label for="file">Imagen:</label>
+            <input type="file" name="file" id="file"><br><br><br> -->
+
+            <label for="image"> Url de la imagen (preferiblemente URL de imagen linkedin):</label>
+            <input type="text" id="image" name="image" 
+                value="<% if (editing || hasError) { %><%= user.image %><% } %>" 
+                class="<%= validationErrors.find(e => e.path === 'image') ? 'invalid' : '' %>">
+            
+            <label for="status"> Seleciona el status del miembro:</label>
+            <select name="status" id="status">
+                <option value="tesista" selected>tesista</option>
+                <option value="collab">collab</option>
+                <option value="tech">tech</option>
+            </select>
 
             <input type="hidden" name="_csrf" value="<%= csrfToken %>">
             
             <% if (editing) { %>
-                <input type="submit" value="Actualizar member">
+                <input type="submit" value="Actualizar user">
                 
             <% } else { %>
-                <input type="submit" value="Añadir member">
+                <input type="submit" value="Añadir user">
             <% } %>
         </form>
 
         <% if (editing) { %>
-            <form action="/admin/delete/<%= member._id %>" method="post" style="display:inline">
+            <form action="/admin/delete/<%= user._id %>" method="post" style="display:inline">
                 <input type="hidden" name="_csrf" value="<%= csrfToken %>">
-                <input type="submit" value="Borrar member" class="button-delete">
+                <input type="submit" value="Borrar user" class="button-delete">
             </form>
         <% } %>
     

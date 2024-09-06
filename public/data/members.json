@@ -1,0 +1,148 @@
+[
+    {
+      "email": "",
+      "name": "Andrea Piñones",
+      "permissionLevel": "user",
+      "password": "lapab",
+      "cargo": "Oceanógrafa PhD. Académica ICML. Investigadora Responsable Proyecto FONDECYT Regular 1210988.",
+      "descripcion": "Investigadora asociada centro IDEAL, COPAS Coastal, Instituto Milenio BASE.",
+      "posts": [],
+      "image": "images/equipo/andrea.jpg",
+      "status": "tech",
+      "bookmark": []
+    },
+    {
+      "email": "",
+      "name": "Paula Amador-Véliz",
+      "permissionLevel": "user",
+      "password": "lapab",
+      "cargo": "Encargada de Laboratorio y Asistente de Investigación Proyecto Fondecyt Regular 1210988.",
+      "descripcion": "Especialista en acoplamiento biofísico en altas latitudes: interacción océano-atmósfera.",
+      "posts": [],
+      "image": "images/equipo/paula.jpg",
+      "status": "tech",
+      "bookmark": []
+    },
+    {
+      "email": "",
+      "name": "David Donoso",
+      "permissionLevel": "user",
+      "password": "lapab",
+      "cargo": "Profesor agregado de Oceanografía Física en la PUCV.",
+      "descripcion": "Modelador numérico del Océano Austral en Instituto Milenio Base y en Proyecto FONDECYT 1210988.",
+      "posts": [],
+      "image": "images/equipo/david.jpg",
+      "status": "tech",
+      "bookmark": []
+    },
+    {
+      "email": "",
+      "name": "Octavio Mercado-Peña",
+      "permissionLevel": "user",
+      "password": "lapab",
+      "cargo": "Analista de datos oceanográficos para el centro de investigación COPAS COASTAL y LaPAB.",
+      "descripcion": "Especialista en Olas de Calor y Frío Marinas, acoplamiento océano-atmósfera y biofísico.",
+      "posts": [],
+      "image": "images/equipo/octavio.jpg",
+      "status": "tech",
+      "bookmark": []
+    },
+    {
+      "email": "",
+      "name": "Daniela Rojas-Rojas",
+      "permissionLevel": "user",
+      "password": "lapab",
+      "cargo": "Analista de datos SIG para el LaPAB proyecto Fondecyt Regular 1210988.",
+      "descripcion": "Especialista en teledetección, Macroalgas, Olas de Calor Marinas.",
+      "posts": [],
+      "image": "images/equipo/daniela.jpg",
+      "status": "tech",
+      "bookmark": []
+    },
+    {
+      "email": "",
+      "name": "Manuela Flores",
+      "permissionLevel": "user",
+      "password": "lapab",
+      "cargo": "Tesis de pregrado en Biología Marina, UACh.",
+      "descripcion": "",
+      "posts": [
+        {
+          "title": "Perturbación antrópica en las tramas tróficas antárticas y ecorregionalización del Océano Austral (50-80º S)",
+          "url": "investigation/abstract2017_INI_eng.pdf"
+        }
+      ],
+      "image": "images/equipo/retrato-silueta.png",
+      "status": "tesista",
+      "bookmark": []
+    },
+    {
+      "email": "",
+      "name": "Albert Palomino-Gonzalez",
+      "permissionLevel": "user",
+      "password": "lapab",
+      "cargo": "Tesis de doctorado en Biología Marina UACh.",
+      "descripcion": "",
+      "posts": [
+        {
+          "title": "Influencia de factores atmosféricos y oceanográficos en la dinámica de población local de los pingüinos pigoscélidos",
+          "url": "investigation/abstract2017_INI_eng.pdf"
+        }
+      ],
+      "image": "images/equipo/albert-palomino.jpeg",
+      "status": "tesista",
+      "bookmark": []
+    },
+    {
+      "email": "",
+      "name": "Jaison A. Martínez Nopai",
+      "permissionLevel": "user",
+      "password": "lapab",
+      "cargo": "Tesis de pregrado en Biología Marina, UACh.",
+      "descripcion": "",
+      "posts": [
+        {
+          "title": "Influencia de la circulación oceánica en rutas de transporte del krill antártico (Euphausia superba) en la península antártica occidental",
+          "url": "investigation/abstract2017_INI_eng.pdf"
+        }
+      ],
+      "image": "images/equipo/jason.jpg",
+      "status": "tesista",
+      "bookmark": []
+    },
+    {
+      "email": "",
+      "name": "Jennifer Villarroel-Nenen",
+      "permissionLevel": "user",
+      "password": "lapab",
+      "cargo": "Tesis de pregrado Geofísica- Universidad de Concepción.",
+      "descripcion": "",
+      "posts": [
+        {
+          "title": "Estudio de la variabilidad espacial y temporal de la marea en el nivel del mar y transporte de partículas lagrangianas en regiones costeras de la Península Antártica Occidental (PAO)",
+          "url": "investigation/abstract2017_INI_eng.pdf"
+        }
+      ],
+      "image": "images/equipo/jennifer.jpg",
+      "status": "tesista",
+      "bookmark": []
+    },
+    {
+      "email": "",
+      "name": "Alejandra Espinosa Espinosa",
+      "permissionLevel": "user",
+      "password": "lapab",
+      "cargo": "Estudiante de Pregrado de Biología Marina en Universidad Autónoma de Baja California Sur, México.",
+      "descripcion": "",
+      "posts": [
+        {
+          "title": "Estudio de la variabilidad espacial y temporal de la marea en el nivel del mar y transporte de partículas lagrangianas en regiones costeras de la Península Antártica Occidental (PAO)",
+          "url": "investigation/abstract2017_INI_eng.pdf"
+        }
+      ],
+      "image": "images/equipo/alejandra.png",
+      "status": "tesista",
+      "bookmark": []
+    }
+  ]
+  

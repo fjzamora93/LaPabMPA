@@ -10,6 +10,7 @@ const userSchema = new Schema({
   },
   name: {
     type: String,
+    required:true
   },
   permissionLevel: {
     type: String,
@@ -18,25 +19,39 @@ const userSchema = new Schema({
 },
   password: {
     type: String,
-    required: true
+    default: 'lapab'
   },
+  cargo: {
+    type: String,
+    default: ''
+  },
+  descripcion: {
+    type: String,
+    default: ''
+  },
+  //Posts es una lista de objetos que tienen un título y una url
   posts: [{
-    type: Schema.Types.ObjectId,
-    ref: 'Post',
-  }],
+    title: {
+        type: String,
+        default: ''
+    },
+    url: {
+        type: String,
+        default: ''
+    }
+}],
 
-  cart: {
-    items: [
-      {
-        productId: {
-          type: Schema.Types.ObjectId,
-          ref: 'Product',
-          required: true
-        },
-        quantity: { type: Number, required: true }
-      }
-    ]
-  },
+  image: {
+    type: String,
+    default: 'images/equipo/retrato-silueta.png'
+    },
+
+status: {
+    type: String,
+    enum: ['tesista', 'collab', 'tech'],
+    default: 'tesista'
+    },
+
   bookmark: [{
     type: Schema.Types.ObjectId,
     ref: 'Post',
@@ -50,19 +65,6 @@ userSchema.methods.addBookmark = function(recipe) {
     return this.save();
 };
 
-
-// userSchema.methods.removeFromCart = function(productId) {
-//   const updatedCartItems = this.cart.items.filter(item => {
-//     return item.productId.toString() !== productId.toString();
-//   });
-//   this.cart.items = updatedCartItems;
-//   return this.save();
-// };
-
-// userSchema.methods.clearCart = function() {
-//   this.cart = { items: [] };
-//   return this.save();
-// };
 
 module.exports = mongoose.model('User', userSchema);
 

@@ -4,6 +4,8 @@ const isAuth = require('../middleware/is-auth');
 const userController = require('../controllers/user');
 const apiController = require('../controllers/api');
 
+const User = require('../models/user');
+
 
 //recuerda que user parte desde la ruta principal, no tiene una propia como la tiene admin
 
@@ -11,9 +13,22 @@ router.get('/', userController.getIndex);
 router.get('/index', userController.getIndex);
 
 
-router.get('/quienes-somos', (req, res) => {
-    res.render('sections/quienes-somos', {
-        pageTitle: 'Home',});
+router.get('/equipo', async (req, res) => {
+    try{
+        const users = await User.find().sort({ name: 1 });
+        const tesistas = users.filter(user => user.status === 'tesista');
+        const techs = users.filter(user => user.status === 'tech');
+
+        console.log('USUARIOS RESCATADOS', techs);  
+        res.render('sections/equipo', {
+            pageTitle: 'Home',
+            tesistas: tesistas,
+            techs : techs
+        });
+    } catch (error){
+        console.log(error);
+    }
+    
 });
 
 router.get('/calendario', (req, res) => {
@@ -21,10 +36,7 @@ router.get('/calendario', (req, res) => {
         pageTitle: 'Home',});
 });
 
-router.get('/equipo', (req, res) => {
-    res.render('sections/equipo', {
-        pageTitle: 'Home',});
-});
+
 
 router.get('/congreso', (req, res) => {
     res.render('sections/congreso', {

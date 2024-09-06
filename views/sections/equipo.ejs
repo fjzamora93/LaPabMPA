@@ -8,128 +8,60 @@
     <section class="equipo">
         <h2> Nuestro equipo </h2>
 
-        <% if (locals.isAuthenticated) { %>
-        <a href="/admin/add-member">
-            <div class="opinion" id="equipo-trabajo">
-                    <button type="button" class="button-add" id="ingr-button">
-                        <i class="fas fa-plus"></i>
-                    </button>
-                <h3>Añadir un nuevo miembro</h3><br>
-            </div>
-        </a>
-
         
-            
+        <% if (locals.isAuthenticated && (locals.user.permissionLevel === 'superadmin' || locals.user.permissionLevel === 'admin')) { %>
+            <a href="/admin/add-member">
+                <div class="opinion" id="equipo-trabajo">
+                        <button type="button" class="button-add" id="ingr-button">
+                            <i class="fas fa-plus"></i>
+                        </button>
+                    <h3>Añadir un nuevo miembro</h3><br>
+                </div>
+            </a>  
         <% } %>
 
-        <div class="opinion" id="equipo-trabajo">
-            <a href="/admin/edit-member/<%= user._id %>" style="float: right">
-                <button type="button" class="button-add" id="button-edit">
-                    <i class="fas fa-edit"></i>
-                </button>
-            </a>
-            <img src="images/equipo/andrea.jpg" alt="Foto de la persona" class="foto">
-            <h3>Andrea Piñones</h3><br>
-            <span> <b>Oceanógrafa PhD. Académica ICML. Investigadora Responsable Proyecto FONDECYT Regular 1210988.</b> <br><br></span>
-            <span class="biografia"> Investigadora asociada centro IDEAL, COPAS Coastal,
-                Instituto Milenio BASE.
-            </span>
-        </div>
+        <% for (let tech of techs) { %>
 
-        <div class="opinion">
-            <img src="images/equipo/paula.jpg" alt="Foto de la persona" class="foto">
-            <h3>Paula Amador-Véliz</h3><br>
-            <span><b> Encargada de Laboratorio y Asistente de Investigación Proyecto Fondecyt Regular 1210988. </b><br><br></span>
-            <span class="biografia"> Especialista en acoplamiento biofísico en altas latitudes: interacción céano-atmósfera.
-            </span>
-        </div>
+            <div class="opinion" id="equipo-trabajo">
+                <!--- BOTÓN DE EDITAR -->
+                <% if (locals.isAuthenticated && (locals.user.permissionLevel === 'superadmin' || locals.user.permissionLevel === 'admin')) { %>
+                    <a href="/admin/edit-member/<%= user._id %>" style="float: right">
+                        <button type="button" class="button-add" id="button-edit">
+                            <i class="fas fa-edit"></i>
+                        </button>
+                    </a>
+                <% } %>
 
-        <div class="opinion">
-            <img src="images/equipo/david.jpg" alt="Foto de la persona" class="foto">
-            <h3>David Donoso</h3><br>
-            <span> <b>Profesor agregado de Oceanografía Física en la PUCV.</b><br><br></span>
-            <span class="biografia"> Modelador numérico del Océano Austral en Instituto Milenio Base y en Proyecto FONDECYT 1210988.
-            </span>
-        </div>
-
-        <div class="opinion">
-            <img src="images/equipo/octavio.jpg" alt="Foto de la persona" class="foto">
-            <h3>Octavio Mercado-Peña</h3><br>
-            <span> <b>Analista de datos oceanográficos para el centro de investigación COPAS COASTAL y LaPAB.</b><br><br></span>
-            <span class="biografia">Universidad de Concepción y Universidad Austral de Chile, respectivamente.
-                Especialista en Olas de Calor y Frío Marinas, acoplamiento océano-atmósfera y biofísico.  
-            </span>
-        </div>
-
-        <div class="opinion">
-            <img src="images/equipo/daniela.jpg" alt="Foto de la persona" class="foto">
-            <h3>Daniela Rojas-Rojas </h3><br>
-            <span><b> Analista de datos SIG para el LaPAB proyecto Fondecyt Regular 1210988.</b><br><br></span>
-            <span class="biografia">Especialista en teledetección, Macroalgas, Olas de Calor Marinas.  
-            </span>
-        </div>
+                <!--- PERFIL DE LA PERSONA - -->
+                <img src="<%= tech.image %>" alt="Foto de la persona" class="foto">
+                <h3><%= tech.name %></h3><br>
+                <span> <b><%= tech.cargo %></b> <br><br></span>
+                <span class="biografia"> <%= tech.descripcion %> </span>
+            </div>
+        <% } %>
 
 
 
     <h2> Experiencia de nuestros estudiantes </h2>
    
+    <% for (let tech of tesistas) { %>
 
-    <div class="opinion" id="tesista">
-        <img src="images/equipo/retrato-silueta.png" alt="Foto de la persona" class="foto">
-        <h3>Manuela Flores </h3>
-        
-         <span class="tesis" target="_blank"><br>
-            Tesis de pregrado en Biología Marina, UACh  <br><br>
-            <a href="investigation/abstract2017_INI_eng.pdf" target="_blank">"Perturbación antrópica en las tramas tróficas antárticas y ecorregionalización del Océano Austral (50-80º S)”
-                Doctorado en Oceanografía-Universidad de Concepción. 2022"</a>
-        </span>
-        <div class="comentario">"Estoy impresionada por la calidad de los recursos y equipos disponibles en el laboratorio."</div>
-    </div>
+        <div class="opinion" id="equipo-trabajo">
+            <!--- BOTÓN DE EDITAR -->
+            <% if (locals.isAuthenticated && (locals.user.permissionLevel === 'superadmin' || locals.user.permissionLevel === 'admin')) { %>
+                <a href="/admin/edit-member/<%= user._id %>" style="float: right">
+                    <button type="button" class="button-add" id="button-edit">
+                        <i class="fas fa-edit"></i>
+                    </button>
+                </a>
+            <% } %>
 
-    <div class="opinion" id="tesista">
-        <img src="images/equipo/albert-palomino.jpeg" alt="Foto de la persona" class="foto">
-        <h3>Albert Palomino-Gonzalez </h3>
-        
-         <span class="tesis" target="_blank"><br>
-            Tesis de doctorado en Biología Marina UACh <br>
-            <br><a href="investigation/abstract2017_INI_eng.pdf">Influencia de factores atmosféricos y oceanográficos en la dinámica de población local de los pingüinos pigoscélidos”</a>
-        </span>
-        <div class="comentario">"Me siento afortunado de formar parte de un laboratorio que promueve el desarrollo profesional y académico de sus miembros."</div>
-    </div>
-
-    <div class="opinion" id="tesista">
-        <img src="images/equipo/jason.jpg" alt="Foto de la persona" class="foto">
-        <h3>Jaison A. Martínez Nopai </h3>
-        
-        <span class="tesis" target="_blank"><br>
-            Tesis de pregrado en Biología Marina, UACh <br>
-            <br><a href="investigation/abstract2017_INI_eng.pdf">"Influencia de la circulación oceánica en rutas de transporte del krill antártico (Euphausia superba) en la península antártica occidental”</a>
-        </span>
-        <div class="comentario">"El apoyo del equipo de investigación en el laboratorio ha sido fundamental para mi proyecto de tesis."</div>
-    </div>
-        
-    <div class="opinion" id="tesista">
-        <img src="images/equipo/jennifer.jpg" alt="Foto de la persona" class="foto">
-        <h3>Jennifer Villarroel-Nenen </h3>
-        
-        <span class="tesis" target="_blank"> <br>
-            Tesis de pregrado Geofísica- Universidad de Concepción
-            <br><br>   <a href="investigation/abstract2017_INI_eng.pdf" target="_blank">"Estudio de la variabilidad espacial y temporal de la marea en el nivel del mar y transporte de partículas lagrangianas en regiones costeras de la Península Antártica Occidental (PAO)"</a>
-        </span>
-        <div class="comentario">"La dirección del laboratorio fomenta un ambiente de aprendizaje continuo y de superación personal."</div>
-    </div>
-
-    <div class="opinion" id="tesista">
-        <img src="images/equipo/alejandra.png" alt="Foto de la persona" class="foto">
-        <h3>Alejandra Espinosa Espinosa </h3>
-        
-         <span class="tesis" target="_blank"> <br>
-            Estudiante de Pregrado de Biología Marina en Universidad Autónoma de Baja California Sur, México
-            <br>   <a href="investigation/abstract2017_INI_eng.pdf" target="_blank"> <br>"Estudio de la variabilidad espacial y temporal de la marea en el nivel del mar y transporte de partículas lagrangianas en regiones costeras de la Península Antártica Occidental (PAO)"</a>
-        </span>
-        <div class="comentario">"Colaboradora del proyecto
-            “Análisis de la fenología de Pingüino barbijo (Pygoscelis antarctica) por medio del uso de cámaras trampa."</div>
-    </div>
+            <!--- PERFIL DE LA PERSONA - -->
+            <img src="<%= tech.image %>" alt="Foto de la persona" class="foto">
+            <h3><%= tech.name %></h3><br>
+            <span class="biografia"> <%= tech.descripcion %> </span>
+        </div>
+    <% } %>
     
 
     <!-- <h2> Colaboradores </h2>-->

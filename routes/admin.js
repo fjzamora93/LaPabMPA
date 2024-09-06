@@ -10,18 +10,20 @@ const router = express.Router();
 router.get('/profile/:idCreator', adminController.getProfile);
 
 router.get('/add-member', isAuth, adminController.getAddMember);
+
+
 router.get('/edit-member/:memberId', adminController.getEditMember);
 
 router.post('/add', 
     [
-        body('nombre')
+        body('name')
             .isString()
-            .isLength({min: 5})
+            .isLength({min: 2})
             .trim(),
         body('descripcion').trim(),
     ], 
     isAuth,
-    adminController.postAddRecipe );
+    adminController.postAddUser );
 
 router.post('/edit/',
     [
