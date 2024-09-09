@@ -3,9 +3,8 @@
 
 <body class="body-index">
     
-    <% if (locals.isAuthenticated 
-        && (locals.user._id == 'member._id' )) 
-    { %>
+    <% if (locals.isAuthenticated) { %>
+        <% if (locals.user._id.toString() === member._id.toString()) { %>
         <a href="/admin/edit-member/<%= member._id %>" style="float: right">
             <button type="button" class="button-add" id="button-edit">
                 <i class="fas fa-edit"></i>
@@ -16,7 +15,8 @@
         -locals.isAuthenticated: <%= locals.isAuthenticated %>
         -locals.user._id: <%= locals.user._id %>
         -member._id: <%= member._id %>
-    <% }  %>
+        <% } %>
+    <% } %>
 
     <div class="user-card">
      
