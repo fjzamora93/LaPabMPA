@@ -21,27 +21,37 @@
             <input type="hidden" id="memberId" name="memberId" value="<% if (editing) { %><%= member._id %><% } %>">
 
             <label for="name">Nombre completo:</label>
-            <input type="text" id="name" name="name" value="<% if (editing || hasError) { %><%= member.name %><% } %>" class="<%= validationErrors.find(e => e.path === 'name') ? 'invalid' : '' %>" required>
-            
+            <input type="text" id="name" name="name" 
+            placeholder="Introduce el nombre comopleto"
+            value="<% if (editing || hasError) { %><%= member.name %><% } %>"
+            class="<%= validationErrors.find(e => e.path === 'name') ? 'invalid' : '' %>" required>
+                 
             <label for="email">Email :</label>
             <input type="text" id="email" name="email" 
                 value="<% if (editing || hasError) { %><%= member.email %><% } %>" 
                 class="<%= validationErrors.find(e => e.path === 'email') ? 'invalid' : '' %>">
 
+            
                 <% if (editing) { %>
                     <label for="email">Contraseña :</label>
                     <input type="password" id="password" name="password" 
-                        value="<%= member.password %>" 
+                        placeholder="Introduce una nueva contraseña"
                         class="<%= validationErrors.find(e => e.path === 'password') ? 'invalid' : '' %>">
                 <% } %>
+            
+              
 
             <label for="cargo">Cargo / Ocupación:</label>
-            <input type="text" id="cargo" name="cargo" value="<% if (editing || hasError) { %><%= member.cargo %><% } %>" class="<%= validationErrors.find(e => e.path === 'cargo') ? 'invalid' : '' %>">
+            <input type="text" id="cargo" name="cargo" 
+            placeholder="Título del que dispone, cargo que ocupa o titulación que está cursando"
+            value="<% if (editing || hasError) { %><%= member.cargo %><% } %>" 
+            class="<%= validationErrors.find(e => e.path === 'cargo') ? 'invalid' : '' %>">
 
             <label for="descripcion">Descripción:</label>
             <textarea id="descripcion" name="descripcion" rows="5" required><% if (editing || hasError) { %><%= member.descripcion.trim() %><% } %></textarea>
 
            
+            <!-- TÍTULO DE LAS PUBLICACIONES -->
             <div id="bloque-lista">
                 <label for="publicaciones">Publicaciones:</label>
                 <span>Inserta el título de las publicaciones de este miembro. </span>
@@ -50,7 +60,7 @@
                 </button>
                 <% if (editing ) { %>
                     <% if(member.posts.length === 0) { %>
-                        <input type="text" name="urlPublicaciones[]" value="" class="input-list">
+                        <input type="text" name="publicaciones[]" value="" class="input-list">
                     <% } %>
                     <% for (let post of member.posts) { %>
                         <input type="text" name="publicaciones[]" value="<%= post.title %>" class="input-list">
@@ -64,10 +74,10 @@
                 <% } %>
             </div>
 
-
+            <!-- URL DE LAS PUBLICACIONES -->
             <div class="bloque-lista">
                 <label for="urlPublicaciones">URL de la publicación:</label>
-                <span >
+                <span>
                     Inserta la URL de las publicaciones (asegúrate de que aparecen en el mismo orden que están arriba)
                 </span>
                 <div id="bloque-lista">
@@ -90,20 +100,22 @@
                     <% } %>
                 </div>
             </div>
+            
 
             <!-- <label for="file">Imagen:</label>
             <input type="file" name="file" id="file"><br><br><br> -->
 
             <label for="image"> Url de la imagen (preferiblemente URL de imagen linkedin):</label>
             <input type="text" id="image" name="image" 
+                placeholder="Introduce la URL de la imagen"
                 value="<% if (editing || hasError) { %><%= member.image %><% } %>" 
                 class="<%= validationErrors.find(e => e.path === 'image') ? 'invalid' : '' %>">
             
             <label for="status"> Seleciona el status del miembro:</label>
             <select name="status" id="status">
-                <option value="tesista" selected>tesista</option>
-                <option value="collab">collab</option>
-                <option value="tech">tech</option>
+                <option value="tesista" <%= member.status === 'tesista' ? 'selected' : '' %>>Tesista</option>
+                <option value="collab" <%= member.status === 'collab' ? 'selected' : '' %>>Colaborador</option>
+                <option value="tech" <%= member.status === 'tech' ? 'selected' : '' %>>Técnico</option>
             </select>
 
             <input type="hidden" name="_csrf" value="<%= csrfToken %>">

@@ -122,7 +122,8 @@ app.use(multer({ storage: fileStorage, fileFilter: fileFilter }).single('file'))
 //!Aunque podrías haber definido cualquier otro nombre en lugar de file, y en el front tendrías que usarlo.
 
 app.use(express.static(path.join(__dirname, 'public')));
-app.use('/images', express.static(path.join(__dirname, 'images')));
+app.use(express.static('public'));
+
 
 
 

@@ -6,6 +6,18 @@
     font-family: "Roboto", sans-serif;
 }
 
+a {
+    color: inherit;      /* Let the color be the same as its parent */
+    text-decoration: none; /* Remove underline */
+    background-color: transparent; /* Remove any background color */
+    font-style: normal; /* Reset font style */
+    font-weight: normal; /* Reset font weight */
+    line-height: normal; /* Reset line height */
+    text-transform: none; /* Reset text transformation */
+    letter-spacing: normal; /* Reset letter spacing */
+    word-spacing: normal; /* Reset word spacing */
+}
+
 h1, h2, h3, h4 {
     font-family: 'Montserrat', sans-serif;
     color: #190733; 

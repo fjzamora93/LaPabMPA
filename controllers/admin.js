@@ -9,7 +9,7 @@ const path = require('path');  // Asegúrate de importar path
 const User = require('../models/user');
 const { ObjectId } = require('mongodb');
 const mongoose = require('mongoose');
-
+const bcrypt = require('bcryptjs');
 
 exports.getProfile = async (req, res, next) => {
     try {
@@ -73,7 +73,7 @@ exports.postAddUser = async (req, res, next) => {
     try {
         // const imgurLink = await uploadImageToImgur(image.path);
 
-        const password = email;
+        const password = await bcrypt.hash(email, 12);
         const permissionLevel = 'user';
 
         const posts = publicaciones.map((publicacion, index) => {
@@ -134,7 +134,7 @@ exports.postDeleteUser = async (req, res, next) => {
 }
 
 exports.postEditMember = async (req, res, next) => {
-    const { name, email, password, cargo, descripcion, 
+    const { memberId, name, email, password, cargo, descripcion, 
         publicaciones, urlPublicaciones, image, status } = req.body;
     
     console.log("Cuerpo del formulaario: ", req.body);
@@ -162,7 +162,7 @@ exports.postEditMember = async (req, res, next) => {
         console.log("usuario encontrado: ", member);
         member.email = email;
         member.name = name;
-        member.password = password;
+        member.password = await bcrypt.hash(password, 12);;
         member.cargo = cargo;
         member.descripcion = descripcion;
         member.status = status;
@@ -170,14 +170,15 @@ exports.postEditMember = async (req, res, next) => {
         member.posts = publicaciones.map((publicacion, index) => {
             return { title: publicacion, url: urlPublicaciones[index] };
         });
+        
 
         const updatedMemmber = await member.save();
         console.log('Actualizando usuario...', updatedMemmber);
         res.redirect('/');
 
     } catch (error) {
-        console.error('Error al subir algo:', error);
-        renderError('Error al subir algo');
+        console.error('Error al actualizar usuario:', error);
+        renderError('Error al actualizar usuario');
     }
 };
 

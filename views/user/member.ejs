@@ -1,16 +1,53 @@
 <%- include('../includes/navigation.ejs') %>
-
-    
+<link rel="stylesheet" href="/style/member.css">
 
 <body class="body-index">
     
-    <p>
-        <%= member.name %>
-    </p>
-    
-    <p>
-        <%= member.descripcion %>
-    </p>
+    <% if (locals.isAuthenticated 
+        && (locals.user._id == 'member._id' )) 
+    { %>
+        <a href="/admin/edit-member/<%= member._id %>" style="float: right">
+            <button type="button" class="button-add" id="button-edit">
+                <i class="fas fa-edit"></i>
+            </button>
+        </a>
+    <% } else { %>
+        NOPE
+        -locals.isAuthenticated: <%= locals.isAuthenticated %>
+        -locals.user._id: <%= locals.user._id %>
+        -member._id: <%= member._id %>
+    <% }  %>
+
+    <div class="user-card">
+     
+        <img src="/<%= member.image %>" alt="Foto de <%= member.name %>" class="user-image">
+        <div class="user-info">
+          <h2 class="user-name"><%= member.name %></h2>
+          
+          <!-- <p class="user-status">Estado: <%= member.status %></p> -->
+          <h4 class="user-cargo"> <%= member.cargo %></h4>
+          <p class="user-email">Email: <%= member.email %></p>
+          <p class="user-description"> <%= member.descripcion %></p>
+          
+          <!-- <p class="user-permission">Nivel de Permiso: <%= member.permissionLevel %></p> -->
+          
+          <br><br><br>
+          
+            <% if (member.posts.length >= 1) { %>
+                <h3>Publicaciones:</h3>
+                <ul class="user-posts">
+                    <% member.posts.forEach(function(post) { %>
+                    <li>
+                        <a href="/<%= post.url %>" target="_blank"><%= post.title %></a>
+                    </li>
+                    <% }) %>
+                </ul>
+            <% } else { %>
+                <h4> - </h4>
+
+            <% } %>
+        </div>
+      </div>
     
 </body>
 
