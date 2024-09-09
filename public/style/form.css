@@ -7,18 +7,21 @@ body {
 }
 
 .button-add, .button-delete{
-    padding: 10px;
-    margin: 10px 0;
     border: none;
+    
+    padding: 10px;
     border-radius: 5px;
     font-size: 20px;
     cursor: pointer;
+    height: 40px;
     width: 50px;
-    float: right;
+    display: inline;
 }
 
 .button-delete {
+    margin: 5px 5px!important;
     border: 1px solid black;
+    display: inline!important;
 }
 
 .button-delete:hover{
@@ -44,8 +47,8 @@ h2 {
 }
 
 .input-list{
-    
-    max-width: 80%;
+    display: inline!important;
+    max-width: 70%;
 }
 
 label {

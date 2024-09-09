@@ -145,7 +145,13 @@ body p{
 
 #button-edit{
     border-radius: 90px;
+    background-color: rgb(255, 255, 255);
     border: rgb(137, 137, 137) 0.5px groove;
+}
+
+#button-edit:hover{
+    background-color: rgb(190, 190, 190);
+    box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.2);
 }
 .entrada p{
     margin:5px;

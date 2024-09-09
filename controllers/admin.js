@@ -98,107 +98,86 @@ exports.postAddUser = async (req, res, next) => {
     }
 };
 
-exports.getEditMember = (req, res, next) => {
-    const memberId = req.params.recetaId;
+exports.getEditMember = async (req, res, next) => {
+    const memberId = req.params.memberId;
     const editing = true;
-    RecetaMdb.findById(memberId)
-    .then(receta => {
+    try{
+        const member = await User.findById(memberId);
+        console.log('Usuario encontrado', member);
         res.render('forms/edit-member' , {
-            receta : receta,
+            member : member,
             editing : editing,
             hasError: false,
             errorMessage: null,
             validationErrors: [],
-            usuario: req.session.user 
         });
+    } catch (err) {
+        console.log(err);
         }
-    )
-    .catch(err => console.log(err))
-};
+    }
 
-exports.postDeleteRecipe = async (req, res, next) => {
-    const recetaId = req.params.recetaId;
-    const user = req.session.user;
 
+exports.postDeleteUser = async (req, res, next) => {
+    const userId = req.params.memberId;
+    console.log('userId:', userId);
     try {
         // Delete the recipe
-        const result = await RecetaMdb.findByIdAndDelete(recetaId);
-        console.log(result);
-
-        // Remove the reference to the recipe from the user's recipes array
-        const userIndex = user.recipes.indexOf(recetaId);
-        if (userIndex > -1) {
-            user.recipes.splice(userIndex, 1);
-            await user.save();
+        const member = await User.findByIdAndDelete(userId);
+        if (!member) {
+            return res.status(404).send('No recipe found with the provided id');
         }
-
         res.redirect('/');
+
     } catch (err) {
         console.log(err);
     }
 }
 
-exports.postEditRecipe = async (req, res, next) => {
-   
-    const { nombre, descripcion, ingredientes, instrucciones, tiempo, dificultad, categoria, idReceta } = req.body;
-    const id = idReceta.trim();
-    const creator = req.session.user._id;
-    const image = req.file;
+exports.postEditMember = async (req, res, next) => {
+    const { name, email, password, cargo, descripcion, 
+        publicaciones, urlPublicaciones, image, status } = req.body;
+    
+    console.log("Cuerpo del formulaario: ", req.body);
+    const renderError = (message, validationErrors = []) => {
+        res.status(422).render('forms/edit-member', {
+            editing: false,
+            hasError: true,
+            user: { name, email, password, cargo, descripcion, 
+                publicaciones, urlPublicaciones, image},
+            errorMessage: message,
+            validationErrors
+        });
+    };
 
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-        return res.status(422).render('edit-recipe', {
-            editing: true,
-            hasError: true,
-            receta: { _id: id, nombre, descripcion, ingredientes, instrucciones, tiempo, dificultad, categoria, creator },
-            errorMessage: errors.array(),
-            validationErrors: errors.array()
-        });
+        console.log(errors.array());
+        return renderError(errors.array().map(error => ({ field: error.param, msg: error.msg })), errors.array());
     }
 
     try {
-        const recipe = await RecetaMdb.findById(id);
-        if (!recipe) {
-            return res.status(404).send('No recipe found with the provided id');
-        }
+        // const imgurLink = await uploadImageToImgur(image.path);
 
-        recipe.nombre = nombre;
-        recipe.descripcion = descripcion;
-        recipe.ingredientes = ingredientes;
-        recipe.instrucciones = instrucciones;
-        recipe.tiempo = tiempo;
-        recipe.dificultad = dificultad;
-        recipe.categoria = categoria;
-        recipe.creator = creator;
+        const member = await User.findById(req.body.memberId);
+        console.log("usuario encontrado: ", member);
+        member.email = email;
+        member.name = name;
+        member.password = password;
+        member.cargo = cargo;
+        member.descripcion = descripcion;
+        member.status = status;
+        member.image = image;
+        member.posts = publicaciones.map((publicacion, index) => {
+            return { title: publicacion, url: urlPublicaciones[index] };
+        });
 
-        if (image) {
-            const imgurLink = await uploadImageToImgur(image.path);
-            if (recipe.image) {
-                fileHelper.deleteFile(recipe.image);
-            }
-            recipe.image = imgurLink;
-        }
-        const savedRecipe = await recipe.save();
-
-
-        const user = await User.findById(creator);
-        if(! user.recipes.includes(savedRecipe._id)){
-            user.recipes.push(savedRecipe._id);
-            await user.save();
-            console.log('Receta añadida al usuario:', user);
-        }
-        
+        const updatedMemmber = await member.save();
+        console.log('Actualizando usuario...', updatedMemmber);
         res.redirect('/');
 
-    } catch (err) {
-        console.error('Error en postEditRecipe:', err);
-        res.status(500).render('edit-recipe', {
-            editing: true,
-            hasError: true,
-            receta: { _id: id, nombre, descripcion, ingredientes, instrucciones, tiempo, dificultad, categoria, creator },
-            errorMessage: 'Error al actualizar la receta',
-            validationErrors: []
-        });
+    } catch (error) {
+        console.error('Error al subir algo:', error);
+        renderError('Error al subir algo');
     }
 };
 

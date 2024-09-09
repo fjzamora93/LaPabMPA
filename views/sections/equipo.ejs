@@ -12,7 +12,7 @@
         <% if (locals.isAuthenticated && (locals.user.permissionLevel === 'superadmin' || locals.user.permissionLevel === 'admin')) { %>
             <a href="/admin/add-member">
                 <div class="opinion" id="equipo-trabajo">
-                        <button type="button" class="button-add" id="ingr-button">
+                        <button type="button" class="button-add" id="button-edit">
                             <i class="fas fa-plus"></i>
                         </button>
                     <h3>Añadir un nuevo miembro</h3><br>
@@ -25,7 +25,17 @@
             <div class="opinion" id="equipo-trabajo">
                 <!--- BOTÓN DE EDITAR -->
                 <% if (locals.isAuthenticated && (locals.user.permissionLevel === 'superadmin' || locals.user.permissionLevel === 'admin')) { %>
-                    <a href="/admin/edit-member/<%= user._id %>" style="float: right">
+                    <form action="/admin/delete-member/<%= tech._id %>" method="post" style="float: right">
+                        <input type="hidden" name="techId" value="<%= tech._id %>">
+                        <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                        <button type="submit" class="button-add" id="button-edit">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </form>
+                <% } %>
+
+                <% if (locals.isAuthenticated && (locals.user.permissionLevel === 'superadmin' || locals.user.permissionLevel === 'admin')) { %>
+                    <a href="/admin/edit-member/<%= tech._id %>" style="float: right">
                         <button type="button" class="button-add" id="button-edit">
                             <i class="fas fa-edit"></i>
                         </button>
@@ -49,12 +59,24 @@
         <div class="opinion" id="equipo-trabajo">
             <!--- BOTÓN DE EDITAR -->
             <% if (locals.isAuthenticated && (locals.user.permissionLevel === 'superadmin' || locals.user.permissionLevel === 'admin')) { %>
-                <a href="/admin/edit-member/<%= user._id %>" style="float: right">
+                <form action="/admin/delete-member/<%= tech._id %>" method="post" style="float: right">
+                    <input type="hidden" name="techId" value="<%= tech._id %>">
+                    <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                    <button type="submit" class="button-add" id="button-edit">
+                        <i class="fas fa-trash"></i>
+                    </button>
+                </form>
+            <% } %>
+
+            <% if (locals.isAuthenticated && (locals.user.permissionLevel === 'superadmin' || locals.user.permissionLevel === 'admin')) { %>
+                <a href="/admin/edit-member/<%= tech._id %>" style="float: right">
                     <button type="button" class="button-add" id="button-edit">
                         <i class="fas fa-edit"></i>
                     </button>
                 </a>
             <% } %>
+
+            
 
             <!--- PERFIL DE LA PERSONA - -->
             <img src="<%= tech.image %>" alt="Foto de la persona" class="foto">

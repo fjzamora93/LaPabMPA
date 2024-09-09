@@ -10,7 +10,7 @@ const router = express.Router();
 router.get('/profile/:idCreator', adminController.getProfile);
 
 router.get('/add-member', isAuth, adminController.getAddMember);
-
+router.post('/delete-member/:memberId', adminController.postDeleteUser);
 
 router.get('/edit-member/:memberId', adminController.getEditMember);
 
@@ -25,18 +25,11 @@ router.post('/add',
     isAuth,
     adminController.postAddUser );
 
-router.post('/edit/',
-    [
-        body('nombre')
-            .isString()
-            .isLength({min: 5})
-            .trim(),
-        body('descripcion').trim(),
-    ], 
+router.post('/edit-member/',
     isAuth,
-    adminController.postEditRecipe );
+    adminController.postEditMember );
     
-router.post('/delete/:recetaId', adminController.postDeleteRecipe);
+
 
 
 
