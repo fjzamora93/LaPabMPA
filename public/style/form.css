@@ -17,6 +17,10 @@ body {
     width: 50px;
     display: inline;
 }
+.button-add:hover{
+    border: rgb(15, 140, 29) 2px solid;
+    transform: scale(1.1);
+}
 
 .button-delete {
     margin: 5px 5px!important;

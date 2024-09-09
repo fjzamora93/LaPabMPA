@@ -39,44 +39,20 @@ exports.getIndex = async (req, res, next) => {
     }
 };
 
-
-exports.getSearch = async (req, res, next) => {
-    try {
-        const { search, categoria } = req.query;
-        const page = +req.query.page || 1;
-        const usuario = req.user || null;
-        let filter = {};
-        if (categoria && categoria !== "todas") {
-            filter.categoria = categoria;
-        }
-        if (search) {
-            filter.nombre = { $regex: search, $options: 'i' };
-        }
-        console.log('Valor del filtro: ', filter);
-
-        const totalItems = await RecetaMdb.find(filter).countDocuments();
-        const items = await RecetaMdb.find(filter)
-            .skip((page - 1) * ITEMS_PER_PAGE)
-            .limit(ITEMS_PER_PAGE);
-
-        res.render('index', {
-            categoria: categoria,
-            search: search,
-            usuario: usuario,
-            recetas: items,
-            currentPage: page,
-            hasNextPage: ITEMS_PER_PAGE * page < totalItems,
-            hasPreviousPage: page > 1,
-            nextPage: page + 1,
-            previousPage: page - 1,
-            lastPage: Math.ceil(totalItems / ITEMS_PER_PAGE)
+exports.getMemberDetails = async (req, res, next) => {
+    try{
+        const member = await User.findById(req.params.memberId);
+        res.render('user/member', {
+            member: member
         });
     } catch (err) {
-        const error = new Error(err);
-        error.httpStatusCode = 500;
-        return next(error);
+        console.log(err);
+        res.status(500).render('500', {
+            });
+        }
     }
-};
+    
+
 
 
 
@@ -119,6 +95,47 @@ exports.getRecipeDetails = async (req, res, next) => {
     });
     }
 };
+
+
+
+exports.getSearch = async (req, res, next) => {
+    try {
+        const { search, categoria } = req.query;
+        const page = +req.query.page || 1;
+        const usuario = req.user || null;
+        let filter = {};
+        if (categoria && categoria !== "todas") {
+            filter.categoria = categoria;
+        }
+        if (search) {
+            filter.nombre = { $regex: search, $options: 'i' };
+        }
+        console.log('Valor del filtro: ', filter);
+
+        const totalItems = await RecetaMdb.find(filter).countDocuments();
+        const items = await RecetaMdb.find(filter)
+            .skip((page - 1) * ITEMS_PER_PAGE)
+            .limit(ITEMS_PER_PAGE);
+
+        res.render('index', {
+            categoria: categoria,
+            search: search,
+            usuario: usuario,
+            recetas: items,
+            currentPage: page,
+            hasNextPage: ITEMS_PER_PAGE * page < totalItems,
+            hasPreviousPage: page > 1,
+            nextPage: page + 1,
+            previousPage: page - 1,
+            lastPage: Math.ceil(totalItems / ITEMS_PER_PAGE)
+        });
+    } catch (err) {
+        const error = new Error(err);
+        error.httpStatusCode = 500;
+        return next(error);
+    }
+};
+
 
 
 async function obtenerSimilarRecipes(recetaId) {

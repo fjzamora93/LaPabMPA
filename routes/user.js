@@ -31,6 +31,8 @@ router.get('/equipo', async (req, res) => {
     
 });
 
+router.get('/member/:memberId', userController.getMemberDetails);
+
 router.get('/calendario', (req, res) => {
     res.render('sections/calendario', {
         pageTitle: 'Home',});
