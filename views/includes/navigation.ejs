@@ -7,6 +7,7 @@
     
     <link rel="stylesheet" href="/style/main.css">
     <link rel="stylesheet" href="/style/auth.css">
+    
     <link rel="icon" href="/images/icon/logo-lapab-black.png" type="image/png">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -21,7 +22,18 @@
 
 <!--- HEADER (CABECERA DE LA PÁGINA)-->
 <header>
-    
+
+    <% if (locals.isAuthenticated) { %>
+        <a href="/member/<%= locals.user._id %>">
+            <span style="float:right; margin: 10px;" class="login-status">
+                <i class="fas fa-user" style="font-size:2em; float: left; margin-right: 10px;"></i>
+                Bienvenid@, <%= locals.user.name %> 
+            </span>
+        </a>
+    <% } %>
+
+
+
     <div>
         <h1>LaPAB</h1>
         <h2>Laboratorio de Procesos Acoplados Biofísicos</h2> 
@@ -36,7 +48,7 @@
        
     <a href="/login">
         <button id="button-auth">
-            <i class="fas fa-user"></i>
+            <i class="fas fa-sign-in"></i>
         </button>
     </a>
     <% } else { %>
@@ -46,8 +58,15 @@
         <button id="button-auth" type="submit">
             <i class="fas fa-door-open"> </i> 
         </button>
-        <span style="float:right; margin: 10px;">Bienvenido, <%= locals.user.name %> </span>
     </form>
+    
+    <a href="/member/<%= locals.user._id %>">
+        <button id="button-auth">
+            <i class="fas fa-user"></i>
+        </button>
+    </a>
+
+    
     <% } %>
 
     <ul class = mostrar-moviles >
@@ -79,3 +98,4 @@
 
     
 </nav>
+<link rel="stylesheet" href="/style/navigation.css">

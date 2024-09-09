@@ -174,7 +174,7 @@ exports.postEditMember = async (req, res, next) => {
 
         const updatedMemmber = await member.save();
         console.log('Actualizando usuario...', updatedMemmber);
-        res.redirect('/');
+        res.redirect('/equipo');
 
     } catch (error) {
         console.error('Error al actualizar usuario:', error);

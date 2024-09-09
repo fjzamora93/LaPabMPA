@@ -83,9 +83,11 @@
             
 
             <!--- PERFIL DE LA PERSONA - -->
-            <img src="<%= tech.image %>" alt="Foto de la persona" class="foto">
-            <h3><%= tech.name %></h3><br>
-            <span class="biografia"> <%= tech.descripcion %> </span>
+            <a href="/member/<%= tech._id %>"> 
+                <img src="<%= tech.image %>" alt="Foto de la persona" class="foto">
+                <h3><%= tech.name %></h3><br>
+                <span class="biografia"> <%= tech.descripcion %> </span>
+            </a>
         </div>
     <% } %>
     

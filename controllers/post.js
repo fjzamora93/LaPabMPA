@@ -11,11 +11,19 @@ exports.getPosts = async (req, res, next) => {
     console.log('GET request received en la API! ->', req.query);
     try{
         const posts = await postModel.find().sort({ title: 1 });
-        res.json({ message: 'Posts fetched successfully!', posts });
+        res.render('sections/proyectos', {
+            posts: posts
+        });
     }
     catch {
         res.status(500).json({ error: 'An internal server error occurred' });
     }
+};
+
+exports.getAddPost = (req, res, next) => {
+    res.render('forms/add-post', {
+        pageTitle: 'Add Post',
+    });
 };
 
 exports.getPostDetails = async (req, res, next) => {

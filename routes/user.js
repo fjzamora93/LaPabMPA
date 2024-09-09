@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const isAuth = require('../middleware/is-auth');
 const userController = require('../controllers/user');
-const apiController = require('../controllers/api');
+
 
 const User = require('../models/user');
 
@@ -46,7 +46,7 @@ router.get('/congreso', (req, res) => {
 });
 
 router.get('/proyectos', (req, res) => {
-    res.render('sections/congreso', {
+    res.render('sections/proyectos', {
         pageTitle: 'Home',});
 });
 

@@ -138,25 +138,6 @@ exports.getSearch = async (req, res, next) => {
 
 
 
-async function obtenerSimilarRecipes(recetaId) {
-    const receta = await RecetaMdb.findById(recetaId);
-    const arrayTitulo = receta.nombre.split(" ");
-    const tituloLimpio = arrayTitulo.filter(palabra => palabra.length > 3);
-    let recetasSimilares = [];
-    for (let palabra of tituloLimpio) {
-        recetasMongoose = await RecetaMdb.find({
-            nombre: { $regex: palabra, $options: 'i' }
-        });
-        recetasSimilares.push(...recetasMongoose);
-    }
-
-    recetasSimilares = recetasSimilares.filter(receta => receta._id.toString() !== recetaId.toString());
-    recetasSimilares = [...new Set(recetasSimilares)];
-    
-    return recetasSimilares;
-}
-
-
 exports.getBookmark = (req, res, next) => {
     const bookmarkIds = req.user.bookmark;
     RecetaMdb.find({ _id: { $in: bookmarkIds } })

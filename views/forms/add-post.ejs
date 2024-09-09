@@ -1,0 +1,84 @@
+<%- include('../includes/navigation.ejs') %>
+
+<body class="body-index">
+    <div class="container">
+        <form action="/create-post" method="POST" enctype="multipart/form-data">
+            <!-- Campo CSRF -->
+            <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+        
+            <!-- Título -->
+            <label for="title">Título:</label>
+            <input type="text" id="title" name="title" required><br>
+        
+            <!-- Subtítulo -->
+            <label for="subtitle">Subtítulo:</label>
+            <input type="text" id="subtitle" name="subtitle"><br>
+        
+            <!-- Descripción -->
+            <label for="description">Descripción:</label>
+            <textarea id="description" name="description"></textarea><br>
+        
+            <!-- Contenido -->
+            <label for="content">Contenido:</label>
+            <textarea id="content" name="content"></textarea><br>
+        
+            <!-- Items -->
+            <label for="items">Items (separados por comas):</label>
+            <input type="text" id="items" name="items" placeholder="Item 1, Item 2, Item 3"><br>
+        
+            <!-- Pasos -->
+            <label for="steps">Pasos (separados por comas):</label>
+            <input type="text" id="steps" name="steps" placeholder="Paso 1, Paso 2, Paso 3"><br>
+        
+            <!-- Tags -->
+            <label for="tags">Tags (separados por comas):</label>
+            <input type="text" id="tags" name="tags" placeholder="Tag 1, Tag 2, Tag 3"><br>
+        
+            <!-- URL -->
+            <label for="url">URL:</label>
+            <input type="url" id="url" name="url"><br>
+        
+            <!-- Imagen URL -->
+            <label for="imgUrl">Imagen (URL):</label>
+            <input type="url" id="imgUrl" name="imgUrl"><br>
+        
+            <!-- Archivo adjunto -->
+            <label for="attachedFile">Archivo adjunto:</label>
+            <input type="file" id="attachedFile" name="attachedFile"><br>
+        
+            <!-- Categorías -->
+            <label for="category">Categorías (separadas por comas):</label>
+            <input type="text" id="category" name="category" placeholder="Categoría 1, Categoría 2, Categoría 3"><br>
+        
+            <!-- Fecha -->
+            <label for="date">Fecha:</label>
+            <input type="date" id="date" name="date"><br>
+        
+            <!-- Precio -->
+            <label for="price">Precio:</label>
+            <input type="number" id="price" name="price" step="0.01" min="0"><br>
+        
+            <!-- Estado del post -->
+            <label for="status">Estado:</label>
+            <select id="status" name="status">
+                <option value="draft">Borrador</option>
+                <option value="published">Publicado</option>
+                <option value="archived">Archivado</option>
+            </select><br>
+        
+            <!-- Autor (ID del autor) -->
+            <label for="author">Autor (ID):</label>
+            <input type="text" id="author" name="author"><br>
+        
+            <!-- Botón para enviar el formulario -->
+            <button type="submit">Crear Post</button>
+        </form>
+    
+    </div>
+</body>
+
+ <!--- FOOTER (PIE DE PÁGINA)-->
+ <%- include('../includes/footer') %>
+</html>
+
+<link rel="stylesheet" href="/style/form.css">

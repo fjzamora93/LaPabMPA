@@ -1,208 +1,22 @@
 
-
-/* Reset y Estilo Básico del Menú */
-ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-}
-
-li {
-    margin: 0;
-    display: inline-block;
-}
-
-a {
-    text-decoration: none;
-    color: #fff;
-    display: inline-block;
-    align-items: center;
-    padding: 10px 15px;
-}
-
-/* Estilo para el contenedor del menú */
-nav {
-    background-color: #414141;
-    border-bottom: 1px solid #ddd;
-    padding: 10px 20px;
-    margin-bottom: 50px;
-    min-height: 100px;
-}
-
-/* Estilo para el ícono en el menú */
-nav i {
-    font-size: 20px;
-    margin-right: 8px;
-}
-
-.auth-button {
-    background-color: #e74c3c;
+.login-status{
+    text-align: left;
+    padding: 15px;
+    background-color: white;
     border-radius: 5px;
-    font-size: 16px;
-    transition: background-color 0.3s;
+    min-width: 100px;
+    border: 1px solid #000000;
+    min-height: 70px;
 }
 
-.auth-button:hover {
-    background-color: #c0392b;
+.login-status:hover{
+    background-color: #c9c9c9;
 }
 
-button {
-    background-color: #e74c3c;
-    border: none;
-    color: #fff;
-    padding: 10px 20px;
-    font-size: 16px;
-    cursor: pointer;
-    border-radius: 5px;
-}
-
-button:hover {
-    background-color: #c0392b;
-}
-
-.auth-message {
-    display: inline-block;
-    align-items: center;
-    color: #fff;
-}
-
-.profile-icon {
-    font-size: 40px;
-    margin-right: 10px;
-}
-
-.favorites-icon {
-    font-size: 18px;
-    margin-right: 5px;
-}
-
-header {
-    background: linear-gradient(135deg, #f8b400, #f5a623); /* Degradado de color de fondo */
-    color: white;
-    padding: 20px 0; /* Más espacio arriba y abajo */
-    text-align: center;
-    font-family: 'Arial', sans-serif; /* Fuente principal */
-    border-bottom: 5px solid #f57f17; /* Borde decorativo inferior */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Sombra sutil */
-}
-
-header h1 {
-    font-size: 2.5em; /* Tamaño del texto del título */
-    margin: 0;
-    letter-spacing: 1px; /* Espaciado entre letras */
-}
-
-header .tipografia-cabecera {
-    font-family: "Oooh Baby", cursive;
-    font-weight: 700;
-    font-size: 3em;
-    font-style: normal;
-  }
-
-header::before {
-    display: block;
-    margin: 0 auto 10px; /* Centra el icono y añade espacio abajo */
-    width: 50px; /* Ajusta el tamaño del icono */
-    height: auto;
-}
-
-header img{
-    width: 100px;
-    height: auto;
-}
-
-.menu-bar{
-    max-width: 200px;
-    margin: 20px;
-    display: inline;
-    padding: 20px;
-    transition: background-color 0.3s, transform 0.3s;
-}
-
-.menu-bar:hover a{
-    background-color: #b7b7b8;
-    color: rgb(53, 50, 50);
-    transform: scale(1.25);
-}
-
-.menu-bar form{
-    display: inline;
-}
-
-/* Contenedor general para los mensajes de autenticación */
-.auth-message {
-    padding: 10px;
-    border-radius: 5px;
-    color: #fff;
-    text-align: center;
-    max-width: 300px;
-    font-size: 16px;
-    display: inline;
-    margin: 30px;
-}
-
-
-/* Estilo para el mensaje de no registrado */
-.auth-message.not-registered {
-    background-color: #e74c3c; /* Rojo */
-    border: 1px solid #c0392b; /* Rojo oscuro */
-}
-
-/* Estilo para el mensaje de usuario registrado */
-.auth-message.registered {
-    background-color: #189410; /* Verde */
-    border: 1px solid #148710; /* Verde oscuro */
-}
-
-
-.auth-message.registered:hover {
-    background-color: #e6c12d; /* Verde */
-    border: 1px solid #c1ab2f; /* Verde oscuro */
-}
-
-
-/* Estilos para pantallas menores a 600px */
-@media (max-width: 600px) {
-    .auth-message {
-        display: block;
-    }
-    
-    nav {
-        display: block;
-    }
-
-    ul {
-        display: block;
-    }
-
-    li {
-        display: block;
-        width: 100%;
-    }
-
-    a {
-        display: block;
-    }
-
-
-    .auth-button {
-        width: 100%;
+@media screen and (max-width: 900px){
+    .login-status{
         text-align: center;
-        margin-bottom: 10px;
-    }
-
-    .auth-button:last-child {
-        margin-bottom: 0;
-    }
-
-    nav ul li {
-        display: block!important;
-    }
-
-    .menu-bar, .menu-bar form{
-        max-width: 200px;
-        display: block;
-        margin: auto;
+     
+        min-height: 200px;
     }
 }
-

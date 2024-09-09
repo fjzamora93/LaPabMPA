@@ -70,7 +70,7 @@ app.set('views', 'views');
 
 
 //IMPORTACIÓN DE LAS RUTAS
-const apiRoutes = require('./routes/api');
+const postRoutes = require('./routes/post');
 const adminRoutes = require('./routes/admin')
 const recipeRoutes = require('./routes/user')
 const authRoutes = require('./routes/auth');
@@ -198,16 +198,11 @@ app.use((req, res, next) => {
     next();
 });
 
-// RUTA PARA OBTENER EL TOKEN CSRF EN LA API
-app.get('/api/csrf-token', (req, res) => {
-    console.log('CSRF Token fetched from the backend:', req.session.csrfToken);
-    res.status(201).json({ csrfToken: req.session.csrfToken });
-});
 
 //RUTAS DE LA APLICACIÓN GENERALES
 app.use('/', recipeRoutes);
 app.use('/admin', adminRoutes);
-app.use('/api', apiRoutes);
+app.use('/post', postRoutes);
 app.use(pdfRoutes);
 app.use(authRoutes);
 
