@@ -1,9 +1,10 @@
 const postModel = require('../models/post');
-const recipe = require('../models/recipeMdb');
+
 const { uploadImageToImgur } = require('../util/file');
 const fileHelper = require('../util/file');
 const { validationResult } = require('express-validator');
 const User = require('../models/user');
+const Post = require('../models/post');
 const crypto = require('crypto');
 const bcrypt = require('bcryptjs');
 
@@ -20,11 +21,43 @@ exports.getPosts = async (req, res, next) => {
     }
 };
 
-exports.getAddPost = (req, res, next) => {
-    res.render('forms/add-post', {
-        pageTitle: 'Add Post',
-    });
+exports.getAddPost = async (req, res, next) => {
+    try{
+        const members= await User.find({status: { $ne: 'admin' } }).sort({ name: 1 });
+        console.log(typeof members); 
+        res.render('forms/add-post', {
+            pageTitle: 'Add Post',
+            members: members
+        });
+    } catch (error) {
+        res.status(500).json({ error: 'An internal server error occurred' });
+    }
+    
 };
+
+exports.postAddPost = async (req, res, next) => {
+    try{
+        const members= await User.find({status: { $ne: 'admin' } }).sort({ name: 1 });
+
+        const { title, description, content, tags, url, attachedFile, date, author, status } = req.body;
+        const newPost = new Post({ title, description, content, tags, url, attachedFile, date, author, status });
+
+        await newPost.save();
+        console.log('New post created:', newPost);
+
+        members.forEach(async (member) => {
+            if (!member.bookmark.includes(newPost._id)) {
+                member.bookmark.push(newPost);
+                await member.save();
+            }
+        });
+
+        res.redirect('/');
+       
+    } catch (error) {
+        res.status(500).json({ error: 'An internal server error occurred' });
+        };
+    };
 
 exports.getPostDetails = async (req, res, next) => {
     const id = req.params.postId;
@@ -35,40 +68,6 @@ exports.getPostDetails = async (req, res, next) => {
         }
         res.json({ message: 'Post fetched successfully!', post });
     } catch {
-        res.status(500).json({ error: 'An internal server error occurred' });
-    }
-}
-
-exports.postPosts = async (req, res, next) => {
-    try {
-        // Verifica si el CSRF Token está presente
-        const csrfToken = req.headers['x-csrf-token'];
-        if (!csrfToken) {
-            return res.status(400).json({ error: 'CSRF Token is missing' });
-        }
-
-        // Verifica si el cuerpo de la solicitud contiene 'title' y 'description'
-        if (!req.body || !req.body.title || !req.body.description) {
-            return res.status(400).json({ error: 'title y description are required' });
-        }
-
-        const { title, description, content, items, steps, category, date, status, author } = req.body;
-
-        // Crea un nuevo post y lo agrega a la lista de posts
-        const newPost = new postModel({ title, description, content, items, steps, category, date, status, author });
-
-        if (req.file) {
-            newPost.imgUrl = await uploadImageToImgur(req.file.path);
-            console.log('Imagen subida:', newPost.imgUrl);
-        } else {
-            console.log('No se subió ninguna imagen');
-        }
-
-        newPost.save();
-        res.status(201).json({ message: 'Post added successfully!', post: newPost });
-
-    } catch (error) {
-        console.error('An error occurred:', error);
         res.status(500).json({ error: 'An internal server error occurred' });
     }
 }

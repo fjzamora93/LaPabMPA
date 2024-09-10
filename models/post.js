@@ -6,28 +6,21 @@ const postSchema = mongoose.Schema({
         type: String,
         required: true,
     },
-    subtitle: {type: String,},
-    description: {type: String},
+    description: {type: String, default: ''},
     content : {
         type: String,
+        default: ''
     },
-    items: { type: [String] },
-    steps: { type: [String] },
-    tags: { type: [String] },
-    url: { type: String },
-    imgUrl: { type: String},
-    attachedFile: { type: String },
-    category: { type: [String] },
-    date: { type: String },
-    price: { type: Number },
-    
+    tags: { type: [String], default: [] },
+    url: { type: String, default: '' },	
+    imgUrl: { type: String, default: '' },
+    attachedFile: { type: String, default: '' },
+    date: { type: String, default: '' },
+
 
     //Campos del post relacionados con la visita
     status: { type: String },
-    views: { type: Number, default: 0 },
-    likes: { type: Number, default: 0 },
-    comments: [{ type: Schema.Types.ObjectId, ref: 'Comment' }],
-    author:{type: Schema.Types.ObjectId, ref: 'author'},
+    author:[{ type: Schema.Types.ObjectId, ref: 'author' }],
 
 });
 

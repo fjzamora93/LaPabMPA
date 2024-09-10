@@ -1,36 +1,20 @@
-const RecetaMdb = require('../models/recipeMdb'); 
+
 const User = require('../models/user');
+const Post = require('../models/post');
 const { ObjectId } = require('mongodb');
 const ITEMS_PER_PAGE = 15;
 
 
 exports.getIndex = async (req, res, next) => {
     try {
-        const page = +req.query.page || 1;
-        const usuario = req.user || null;
-
         if (req.user){
             console.log("USUARIO: ", req.user.name);
         } else {
             console.log("NO HAY USUARIO");
         }
-        
-        const totalItems = await RecetaMdb.find().countDocuments();
-        const products = await RecetaMdb.find()
-            .skip((page - 1) * ITEMS_PER_PAGE)
-            .limit(ITEMS_PER_PAGE)
-            .sort({ nombre: 1 });
-
         res.render('index', {
             csrfToken: req.csrfToken(),
             usuario: req.user,
-            recetas: products,
-            currentPage: page,
-            hasNextPage: ITEMS_PER_PAGE * page < totalItems,
-            hasPreviousPage: page > 1,
-            nextPage: page + 1,
-            previousPage: page - 1,
-            lastPage: Math.ceil(totalItems / ITEMS_PER_PAGE)
         });
     } catch (err) {
         const error = new Error(err);
@@ -42,8 +26,10 @@ exports.getIndex = async (req, res, next) => {
 exports.getMemberDetails = async (req, res, next) => {
     try{
         const member = await User.findById(req.params.memberId);
+        const posts = await Post.find({author: { $in: [member._id] } });
         res.render('user/member', {
-            member: member
+            member: member,
+            posts: posts
         });
     } catch (err) {
         console.log(err);

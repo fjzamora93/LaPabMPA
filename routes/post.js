@@ -12,7 +12,7 @@ const router = express.Router();
 router.get('/', postController.getPosts);
 router.get('/add-post', postController.getAddPost);
 
-router.post('/posts', postController.postPosts);
+router.post('/add-post', postController.postAddPost);
 router.delete('/posts/:postId', postController.deletePost);
 router.put('/posts/:postId', postController.putPost);
 

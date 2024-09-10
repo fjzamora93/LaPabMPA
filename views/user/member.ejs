@@ -53,10 +53,10 @@
           
           <br><br><br>
           
-            <% if (member.posts.length >= 1) { %>
+            <% if (posts.length >= 1) { %>
                 <h3>Publicaciones:</h3>
                 <ul class="user-posts">
-                    <% member.posts.forEach(function(post) { %>
+                    <% posts.forEach(function(post) { %>
                     <li>
                         <a href="/<%= post.url %>" target="_blank"><%= post.title %></a>
                     </li>

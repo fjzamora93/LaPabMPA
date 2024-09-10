@@ -2,7 +2,8 @@
 
     
 
-
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js"></script>
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/css/select2.min.css" rel="stylesheet" />
 
 <body>
 
@@ -52,58 +53,14 @@
 
            
             <!-- TÍTULO DE LAS PUBLICACIONES -->
-            <div id="bloque-lista">
-                <label for="publicaciones">Publicaciones:</label>
-                <span>Inserta el título de las publicaciones de este miembro. </span>
-                <button type="button" onclick="addClick(this, 'publicaciones')" class="button-add" id="ingr-button">
-                    <i class="fas fa-plus"></i>
-                </button>
-                <% if (editing ) { %>
-                    <% if(member.posts.length === 0) { %>
-                        <input type="text" name="publicaciones[]" value="" class="input-list">
-                    <% } %>
-                    <% for (let post of member.posts) { %>
-                        <input type="text" name="publicaciones[]" value="<%= post.title %>" class="input-list">
-                        <button type="button" onclick="removeClick(this)" class="button-delete">
-                            <i class="fas fa-minus"></i>
-                        </button>
-                    <% } %>
-                <% } else { %>
-                    <input type="text" name="publicaciones[]" value="" 
-                    placeholder="Introduce una publicación" class="input-list">
+            <label for="posts">Publicaciones:</label>
+            <span> Selecciona varias publicaciones pulsando Shift (Mayús) y haciendo click normal</span>
+            <select id="posts" name="posts" multiple>
+                <% for (let post of posts) { %>
+                    <option value="<%= post._id %>"><%= post.title %></option>
                 <% } %>
-            </div>
-
-            <!-- URL DE LAS PUBLICACIONES -->
-            <div class="bloque-lista">
-                <label for="urlPublicaciones">URL de la publicación:</label>
-                <span>
-                    Inserta la URL de las publicaciones (asegúrate de que aparecen en el mismo orden que están arriba)
-                </span>
-                <div id="bloque-lista">
-                    <button type="button" onclick="addClick(this, 'urlPublicaciones')" class="button-add" id="ingr-button">
-                        <i class="fas fa-plus"></i>
-                    </button>
-                    <% if (editing ) { %>
-                        <% if(member.posts.length === 0) { %>
-                            <input type="text" name="urlPublicaciones[]" value="" class="input-list">
-                        <% } %>
-                        <% for (let post of member.posts) { %>
-                            <input type="text" name="urlPublicaciones[]" value="<%= post.url %>" class="input-list">
-                            <button type="button" onclick="removeClick(this)" class="button-delete" id="ingr-button">
-                                <i class="fas fa-minus"></i>
-                            </button>
-                        <% } %>
-                    <% } else { %>
-                        <input type="text" name="urlPublicaciones[]" value="" 
-                        placeholder="Introduce la primera URL" class="input-list">
-                    <% } %>
-                </div>
-            </div>
+            </select>
             
-
-            <!-- <label for="file">Imagen:</label>
-            <input type="file" name="file" id="file"><br><br><br> -->
 
             <label for="image"> Url de la imagen (preferiblemente URL de imagen linkedin):</label>
             <input type="text" id="image" name="image" 
@@ -112,11 +69,19 @@
                 class="<%= validationErrors.find(e => e.path === 'image') ? 'invalid' : '' %>">
             
             <label for="status"> Seleciona el status del miembro:</label>
+            <% if (member) { %>
             <select name="status" id="status">
                 <option value="tesista" <%= member.status === 'tesista' ? 'selected' : '' %>>Tesista</option>
                 <option value="collab" <%= member.status === 'collab' ? 'selected' : '' %>>Colaborador</option>
                 <option value="tech" <%= member.status === 'tech' ? 'selected' : '' %>>Técnico</option>
             </select>
+            <% } else { %>
+                <select name="status" id="status">
+                    <option value="tesista">Tesista</option>
+                    <option value="collab">Colaborador</option>
+                    <option value="tech">Técnico</option>
+                </select>
+            <% } %>
 
             <input type="hidden" name="_csrf" value="<%= csrfToken %>">
             
@@ -151,3 +116,12 @@
 
 <link rel="stylesheet" href="/style/form.css">
 <script src="/javascript/scripts.js"></script>
+
+<script>
+    $(document).ready(function() {
+        $('#author').select2({
+            placeholder: 'Selecciona autores',
+            allowClear: true
+        });
+    });
+</script>

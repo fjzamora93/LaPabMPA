@@ -18,6 +18,10 @@ a {
     word-spacing: normal; /* Reset word spacing */
 }
 
+.article{
+    margin: 50px 10% 20px;
+}
+
 h1, h2, h3, h4 {
     font-family: 'Montserrat', sans-serif;
     color: #190733; 
@@ -679,6 +683,23 @@ nav ul li:hover ul {
 .papers li a:hover{
     text-decoration: none;
     color: rgb(107, 107, 107);
+}
+
+.post-list{
+    font-size: 1.2em;
+    text-align: left; 
+    
+}
+
+.post-list li{
+    list-style: none;
+    margin-bottom: 20px;
+}
+
+.post-list button, .post-list form{
+    display: inline;
+    font-size: 1.1em;
+
 }
 
 .proyecto1{

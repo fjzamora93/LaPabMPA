@@ -1,5 +1,5 @@
 
-const RecetaMdb = require('../models/recipeMdb'); 
+
 const { validationResult } = require('express-validator');
 const fileHelper = require('../util/file');
 const { uploadImageToImgur } = require('../util/file');
@@ -10,14 +10,13 @@ const User = require('../models/user');
 const { ObjectId } = require('mongodb');
 const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
+const Post = require('../models/post');
 
 exports.getProfile = async (req, res, next) => {
     try {
         const creator = await User.findById(req.params.idCreator).populate('recipes');
         const recuentoRecetas = creator.recipes.length;
 
-        //Gracias a que hemos populado, no será necesario ahora buscar también las recetas y no es necesaria esta línea
-        // const recipes = await RecetaMdb.find({creator: usuario._id});
         
         let isOwner = false;
         if (req.session.user) {
@@ -39,18 +38,26 @@ exports.getProfile = async (req, res, next) => {
 
 
 exports.getAddMember = async (req, res, next) =>{
-    res.render('forms/edit-member', {
-        usuario: req.session.user,
-        editing : false,
-        hasError: false,
-        errorMessage: null,
-        validationErrors: []
-    })
-}
+    try {
+        const posts = await Post.find();
+
+        console.log('P000000000OSTS', posts)
+        res.render('forms/edit-member', {
+            member: null,
+            posts : posts,
+            usuario: req.session.user,
+            editing : false,
+            hasError: false,
+            errorMessage: null,
+            validationErrors: []
+        })
+    } catch (err) {
+        res.status(500).json({ error: 'An internal server error occurred' });
+}}
 
 exports.postAddUser = async (req, res, next) => {
     const { name, email, cargo, descripcion, 
-        publicaciones, urlPublicaciones, image, status } = req.body;
+        posts, image, status } = req.body;
     
 
     const renderError = (message, validationErrors = []) => {
@@ -58,7 +65,7 @@ exports.postAddUser = async (req, res, next) => {
             editing: false,
             hasError: true,
             user: { name, email, cargo, descripcion, 
-                publicaciones, urlPublicaciones, image},
+                posts, image},
             errorMessage: message,
             validationErrors
         });
@@ -75,17 +82,20 @@ exports.postAddUser = async (req, res, next) => {
 
         const password = await bcrypt.hash(email, 12);
         const permissionLevel = 'user';
-
-        const posts = publicaciones.map((publicacion, index) => {
-            return { title: publicacion, url: urlPublicaciones[index] };
-        });
-        console.log('posts:', posts);
+        const bookmark = posts;
 
         const newUser = new User({
             email, name, permissionLevel,  password, cargo,
-            descripcion, 
-            posts, image, status
+            descripcion, bookmark, image, status
         });
+
+        const posts = await Post.find({ _id: { $in: member.bookmark } }); 
+        if (posts.length > 0) {
+            for (let post of posts) {
+                post.author.push(newUser._id);
+                await post.save(); 
+            }
+        }
 
         const savedUser = await newUser.save();
         console.log('Usuario guardado con éxito:', savedUser);
@@ -101,10 +111,12 @@ exports.postAddUser = async (req, res, next) => {
 exports.getEditMember = async (req, res, next) => {
     const memberId = req.params.memberId;
     const editing = true;
+    const posts = await Post.find();
     try{
         const member = await User.findById(memberId);
         console.log('Usuario encontrado', member);
         res.render('forms/edit-member' , {
+            posts: posts,
             member : member,
             editing : editing,
             hasError: false,
@@ -126,7 +138,7 @@ exports.postDeleteUser = async (req, res, next) => {
         if (!member) {
             return res.status(404).send('No recipe found with the provided id');
         }
-        res.redirect('/');
+        res.redirect('/equipo');
 
     } catch (err) {
         console.log(err);
@@ -135,15 +147,13 @@ exports.postDeleteUser = async (req, res, next) => {
 
 exports.postEditMember = async (req, res, next) => {
     const { memberId, name, email, password, cargo, descripcion, 
-        publicaciones, urlPublicaciones, image, status } = req.body;
-    
-    console.log("Cuerpo del formulaario: ", req.body);
+        posts, image, status } = req.body;
     const renderError = (message, validationErrors = []) => {
         res.status(422).render('forms/edit-member', {
             editing: false,
             hasError: true,
             user: { name, email, password, cargo, descripcion, 
-                publicaciones, urlPublicaciones, image},
+                posts, image},
             errorMessage: message,
             validationErrors
         });
@@ -167,13 +177,19 @@ exports.postEditMember = async (req, res, next) => {
         member.descripcion = descripcion;
         member.status = status;
         member.image = image;
-        member.posts = publicaciones.map((publicacion, index) => {
-            return { title: publicacion, url: urlPublicaciones[index] };
-        });
+        member.bookmark = posts;
         
-
         const updatedMemmber = await member.save();
         console.log('Actualizando usuario...', updatedMemmber);
+
+        const publicaciones = await Post.find({ _id: { $in: member.bookmark } }); 
+        if (publicaciones.length > 0) {
+            for (let post of publicaciones) {
+                post.author.push(member._id);
+                await post.save(); 
+            }
+        }
+
         res.redirect('/equipo');
 
     } catch (error) {

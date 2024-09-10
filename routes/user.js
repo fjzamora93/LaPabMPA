@@ -46,8 +46,7 @@ router.get('/congreso', (req, res) => {
 });
 
 router.get('/proyectos', (req, res) => {
-    res.render('sections/proyectos', {
-        pageTitle: 'Home',});
+    res.redirect('/post');
 });
 
 router.get('/contacto', (req, res) => {

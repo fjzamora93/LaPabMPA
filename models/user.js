@@ -29,7 +29,7 @@ const userSchema = new Schema({
     type: String,
     default: ''
   },
-  //Posts es una lista de objetos que tienen un título y una url
+  //! Esta opción es manual, utilizar BOOKMARK, que ahí se guarda la referencia
   posts: [{
     title: {
         type: String,
@@ -48,7 +48,7 @@ const userSchema = new Schema({
 
 status: {
     type: String,
-    enum: ['tesista', 'collab', 'tech'],
+    enum: ['tesista', 'collab', 'tech', 'admin'],
     default: 'tesista'
     },
 
