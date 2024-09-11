@@ -1,0 +1,95 @@
+<%- include('../includes/navigation.ejs') %>
+
+<link rel="stylesheet" href="/style/form.css">
+
+<!-- JavaScript de Select2 -->
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js"></script>
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/css/select2.min.css" rel="stylesheet" />
+
+<body class="body-index">
+    <div class="container">
+        <form action="/post/edit-post/<%= post._id %>" method="POST" enctype="multipart/form-data">
+            <!-- Campo CSRF -->
+            <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+
+            <!-- Título -->
+            <label for="postId">id*:</label>
+            <input type="hidden" id="postId" name="postId" value="<%= post._id %>" required><br>
+        
+            <!-- Título -->
+            <label for="title">Título*:</label>
+            <input type="text" id="title" name="title" value="<%= post.title %>" required><br>
+        
+            <!-- Descripción -->
+            <label for="description">Descripción:</label>
+            <textarea id="description" name="description" rows="5" placeholder="Una breve descripción de la publicacion"><%= post.description %></textarea><br>
+        
+            <!-- Contenido -->
+            <label for="content">Contenido:</label>
+            <textarea id="content" name="content" rows="15" placeholder="Resumen o abstract de la publicación"><%= post.content %></textarea><br>
+        
+            <!-- Tags -->
+            <label for="tags">Tipo de publicación:</label>
+            <select id="tags" name="tags">
+                <option value="paper" <%= post.status === 'paper' ? 'selected' : '' %>>paper</option>
+                <option value="tesis" <%= post.status === 'tesis' ? 'selected' : '' %>>tesis</option>
+                <option value="otros" <%= post.status === 'otros' ? 'selected' : '' %>>otros</option>
+            </select>
+        
+            <!-- URL -->
+            <label for="url">URL de la publicación:</label>
+            <input type="text" id="url" name="url" value="<%= post.url %>"><br>
+        
+            <!-- Fecha -->
+            <label for="date">Fecha de publicación:</label>
+            <input type="date" id="date" name="date" value="<%= post.date %>"><br>
+        
+            <!-- Autor (ID del autor) -->
+            <label for="author">Autores de la publicación:</label>
+            <span>Selecciona varias publicaciones pulsando Shift (Mayús) y haciendo click normal</span>
+            <select id="author" name="author" multiple>
+                <% for (let member of members) { %>
+
+                    <% if(post.author.includes(member._id))  { %>
+                        <option value="<%= member._id %>" selected>><%= member.name %></option>
+                    <% } else { %>
+                        <option value="<%= member._id %>" >><%= member.name %></option>
+                    <% } %>
+
+                <% } %>
+            </select>
+
+        
+
+            <!-- Estado de la publicación -->
+            <label for="status">Estado de la publicación:</label>
+            <select id="status" name="status">
+                <option value="borrador" <%= post.status === 'borrador' ? 'selected' : '' %>>borrador</option>
+                <option value="enviado" <%= post.status === 'enviado' ? 'selected' : '' %>>enviado</option>
+                <option value="publicado" <%= post.status === 'publicado' ? 'selected' : '' %>>publicado</option>
+            </select>
+        
+            <!-- Botón para enviar el formulario -->
+            <button type="submit">Actualizar Post</button>
+          
+        </form>
+
+        
+    
+    </div>
+</body>
+
+ <!--- FOOTER (PIE DE PÁGINA)-->
+ <%- include('../includes/footer') %>
+</html>
+
+
+
+<script>
+    $(document).ready(function() {
+        $('#author').select2({
+            placeholder: 'Selecciona autores',
+            allowClear: true
+        });
+    });
+</script>

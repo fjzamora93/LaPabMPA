@@ -2,90 +2,82 @@
 
 <body>
 
-    <div class="article">
+    <aside class="publicaciones">
+        <%- include('../includes/publicaciones.ejs') %>
+    </aside>
 
-        <h2>Publicaciones:</h2>
-        <ul class="post-list">
-            <% posts.forEach(function(post) { %>
-       
-                <li>
-                    <% if (locals.isAuthenticated && locals.user.permissionLevel === 'admin') { %>
-                        <form action="/post/delete-post/<%= post._id %>" method="post" >
-                            <input type="hidden" name="post" value="<%= post._id %>">
-                            <input type="hidden" name="_csrf" value="<%= csrfToken %>">
-                            <button type="submit" >
-                                <i class="fas fa-trash"></i>
-                            </button>
-                        </form> 
-                    <% } %>
-        
-                    <% if (locals.isAuthenticated && locals.user.permissionLevel === 'admin') { %>
-                        <a href="/post/edit-post/<%= post._id %>" >
-                            <button type="button">
-                                <i class="fas fa-edit"></i>
-                            </button>
-                        </a>
-                    <% } %>
-                    <a href="/<%= post.url %>" target="_blank">
-                        <%= post.title %>
-                    </a>
-                </li>
-            <% }) %>
-        </ul>
-    </div>
-
-
-
-    <div class="proyecto1">
-        <h1>Proyectos de Investigación</h1>
-    </div>
-    <div class="proyecto1">
-        <h2>2021 – 2025 Fondecyt Regular (1210988)</h2>
-    </div>
-    <div class="proyecto">
-        <img  src="/images/resource/corporativas/LUCPR02LU0404_620.jpg" alt="Investigación en la Antártida">
-        <span>
-            Fondecyt Regular es un proyecto que dura cuatro años y cuyo nombre completo es Filling The Gap, caracterización de las condiciones hidrográficas de invierno y la utilización del hábitat en la península antártica nombre utilizando focas instrumentadas y modelación oceanógrafico. 
-            <br><br>El propósito de este proyecto es entender las condiciones oceanográficas durante el invierno. En invierno es un periodo donde es muy difícil acceder a la Antártida y recabar cualquier tipo de dato. La motivación partió para querer conocer lo que sucedía en la Antártida durante los meses que van desde que comienza a irse el sol en otoño hasta su regreso en primavera.
-            <br><br>La forma de realizar esta investigación, o la forma en la que se trató de entender este proceso fue instrumentalizar a las focas de wedel con gps y con sensores de fluorescencia, un sensor capaz de recabar información para saber cómo de productivo es un ambiente.
-            <br><br>A día de hoy, todavía queda una tercera campaña por cubrir donde hemos implementado entre 4 y 5 focas de wedel con los sensores mencionados anteriormente, aunque el proyecto también incluye una parte de modelación para poder extrapolar los datos puntuales obtenidos a otras regiones de la Antártida.
-            <br><br>Este proyecto tiene un tercer componente, y es qué pasa con las focas de wedel durante el invierno, una parte de la investigación que permitirá crear modelos de hábitat y de utilización de espacio entendiendo cuáles son las regiones más importantes desde el punto de vista oceanográfico y biológico. 
-        </span><br><br><br><br>
-    </div>
-    <div class="proyecto1">
-        <h2>2017 – 2021 Fondecyt Iniciación</h2>
-    </div>
-    <div class="proyecto">
-        <img  src="/images/resource/corporativas/WhatsApp Image 2024-04-26 at 10.29.41 (1).jpeg" alt="Investigación sobre corrientes marinas" style="float:right;">
-        <span>
-            El Fondecyt era un proyecto encargado de entender cómo la intrusiones de agua circumpolar profunda  (CDW por sus siglas en inglés) ingresan a sistemas costeros antárticos. 
-            <br><br>Para tal fin, se realizaron mediciones de las corrientes marinas para verificar si hay movimiento de agua circumpolar profundas hasta regiones costeras de la Antártida midiendo las corrientes marinas.
-            <br><br>Durante el proyecto en una de las mediciones se pudo identificar el flujo que ingresa a la bahía y se pudo identificar en qué lugar se ingresaba el agua circumpolar profunda. 
-            <br><br>Al año siguiente se pretendía medir en ese punto si efectivamente ingresaba agua o salía agua, incluyendo , además, un componente de modelización numérica para explicar la temporalidad de esta intrusión o si se podía ver. 
-        </span>
-        </div>
-        <div class="proyecto1">
-            <h3>¿Por qué es tan importante?</h3>
-        </div>
-        <div class="proyecto"> 
-        <p>
-            El CDW se utiliza para describir características del océano, estas aguas tienen un valor de salinidad y temperatura muy concreto, y con esta información se puede describir el lugar de formación de las masas profundas. Estas masas de agua están alrededor de toda la Antártida. 
-            <br><br>El agua circumpolar se caracteriza por tener una mayor temperatura en profundidad, y es un agua que está por debajo de 200 metros. Tiene un alto contenido de nutrientes, es baja en oxígeno y, por ende, participa en procesos de regulación de temperatura y de balance de sal y de nutrientes en la plataforma continentales antárticas.
-            <br><br>“Conociendo el origen y los movimientos de estas masas de agua es posible determinar cómo está interfiriendo en la producción biológica”, afirma Andrea Piñones: “Las algas pueden aprovechar estos nutrientes, y esta salinidad y temperatura pueden provocar cambios. Queríamos ver el vínculo físico para explicar por qué estás son tan productivas”.
-        </p>
-
-    </div>
-
-    <h2 class="instituciones-titulo">Instituciones involucradas</h2>
-    <div class="imagenes-instituciones">
-        <a href="https://www.institutobase.cl/" target="_blank"><img src="/images/proyectos/InstitutoMilenioBase.jpg"></a>
-        <a href="https://centroideal.cl/" target="_blank"><img src="/images/proyectos/CentroIdeal.jpg"></a>
-        <a href="https://copas-coastal.cl/" target="_blank"><img src="/images/proyectos/CentroCopascoastal.jpg"></a>
-        <a href="https://biologiauv.cl/" target="_blank"><img src="/images/proyectos/AnilloSeals.jpg"></a>
-    </div>
     
-<!--- FOOTER (PIE DE PÁGINA)-->
-<%- include('../includes/footer') %>
+    <div class="proyectos">
+
+        <h1>Proyectos de Investigación</h1>
+        
+
+        <h2>2021 – 2025 Fondecyt Regular (1210988)</h2>
+    
+        <div class="proyecto">
+            <img  src="/images/resource/corporativas/LUCPR02LU0404_620.jpg" alt="Investigación en la Antártida">
+            <p>
+                Fondecyt Regular es un proyecto que dura cuatro años y cuyo nombre completo es Filling The Gap, 
+                caracterización de las condiciones hidrográficas de invierno 
+                y la utilización del hábitat en la península antártica nombre utilizando focas instrumentadas 
+                y modelación oceanógrafico. 
+            </p>
+            <p>
+                El propósito de este proyecto es entender las condiciones oceanográficas durante el invierno. 
+                En invierno es un periodo donde es muy difícil acceder a la Antártida y recabar cualquier tipo de dato.
+                La motivación partió para querer conocer lo que sucedía en la Antártida durante los meses que van
+                    desde que comienza a irse el sol en otoño hasta su regreso en primavera.
+            </p>
+            <p>
+                La forma de realizar esta investigación, o la forma en la que se trató de entender este 
+                proceso fue instrumentalizar a las focas de wedel con gps y con sensores de fluorescencia, 
+                un sensor capaz de recabar información para saber cómo de productivo es un ambiente.
+            </p>
+            <p>
+                A día de hoy, todavía queda una tercera campaña por cubrir donde hemos implementado entre 4 y 5 
+                focas de wedel con los sensores mencionados anteriormente, aunque el proyecto 
+                también incluye una parte de modelación para poder extrapolar los datos puntuales obtenidos 
+                a otras regiones de la Antártida.
+            </p>
+            <p>
+                Este proyecto tiene un tercer componente, y es qué pasa con las focas de wedel durante el invierno,
+                una parte de la investigación que permitirá crear modelos de hábitat y de utilización de espacio
+                entendiendo cuáles son las regiones más importantes desde el punto de vista oceanográfico y biológico. 
+            </p>
+        </div>
+
+
+        <h2>2017 – 2021 Fondecyt Iniciación</h2>
+    
+        <div class="proyecto">
+            <img  src="/images/resource/corporativas/WhatsApp Image 2024-04-26 at 10.29.41 (1).jpeg" alt="Investigación sobre corrientes marinas" >
+            <p>
+                El Fondecyt era un proyecto encargado de entender cómo la intrusiones de agua circumpolar profunda  (CDW por sus siglas en inglés) ingresan a sistemas costeros antárticos. 
+            </p>
+            <p>
+                Para tal fin, se realizaron mediciones de las corrientes marinas para verificar si hay movimiento de agua circumpolar profundas hasta regiones costeras de la Antártida midiendo las corrientes marinas.
+            </p>
+            <p>
+                Durante el proyecto en una de las mediciones se pudo identificar el flujo que ingresa a la bahía y se pudo identificar en qué lugar se ingresaba el agua circumpolar profunda. 
+            </p>
+            <p>
+                Al año siguiente se pretendía medir en ese punto si efectivamente ingresaba agua o salía agua, incluyendo , además, un componente de modelización numérica para explicar la temporalidad de esta intrusión o si se podía ver. 
+            </p>
+        </div>
+
+        <h2 class="instituciones-titulo">Instituciones involucradas</h2>
+        <div class="imagenes-instituciones">
+            <a href="https://www.institutobase.cl/" target="_blank"><img src="/images/proyectos/InstitutoMilenioBase.jpg"></a>
+            <a href="https://centroideal.cl/" target="_blank"><img src="/images/proyectos/CentroIdeal.jpg"></a>
+            <a href="https://copas-coastal.cl/" target="_blank"><img src="/images/proyectos/CentroCopascoastal.jpg"></a>
+            <a href="https://biologiauv.cl/" target="_blank"><img src="/images/proyectos/AnilloSeals.jpg"></a>
+        </div>
+    </div>
+    <!--- FOOTER (PIE DE PÁGINA)-->
+    <%- include('../includes/footer') %>
 
 
 </html>
+
+
+

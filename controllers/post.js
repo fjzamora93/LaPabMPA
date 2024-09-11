@@ -72,29 +72,35 @@ exports.getPostDetails = async (req, res, next) => {
     }
 }
 
-exports.putPost = async (req, res, next) => {
+exports.editPost = async (req, res, next) => {
     try {
-        if (!req.body || !req.body.title || !req.body.description) {
-            return res.status(400).json({ error: 'title and description are required' });
+        const post = await postModel.findById(req.params.postId);
+        const members = await User.find({status: { $ne: 'admin' } }).sort({ name: 1 });
+        if (!post) {
+            return res.status(404).json({ error: 'Post not found' });
         }
-        let updatedData = { 
-            title: req.body.title, 
-            description: req.body.description,
-            content: req.body.content,
-            items: req.body.items,
-            steps: req.body.steps,
-            category: req.body.category,
-            status: req.body.status,
-            date: req.body.date
-        };
+        res.render('forms/edit-post', {
+            pageTitle: 'Edit Post',
+            post: post,
+            members: members
+        });
+    } catch (error) {
+        console.error('An error occurred:', error);
+        res.status(500).json({ error: 'An internal server error occurred' });
+    }
+}
 
-        // Subida de imágenes al servidor
-        const oldPost = await postModel.findById(req.params.postId);
-        if (req.file) {
-            updatedData.imgUrl = await uploadImageToImgur(req.file.path);
+exports.putPost = async (req, res, next) => {
+   
+    try {
+        const postId = req.body.postId;
+        const { title, description, content, tags, url, attachedFile, date, author, status } = req.body;
+        const updatedPost = await postModel.findByIdAndUpdate(postId, { title, description, content, tags, url, attachedFile, date, author, status }, { new: true });
+        console.log('Actualizando post')
+        if (!updatedPost) {
+            return res.status(404).json({ error: 'Post not found' });
         }
-        const updatedPost = await postModel.findByIdAndUpdate(req.params.postId, updatedData, { new: true });
-        res.status(200).json({ message: 'Post updated successfully!', updatedPost });
+        res.redirect('/post');
     } catch (error) {
         console.error('An error occurred:', error);
         res.status(500).json({ error: 'An internal server error occurred' });
@@ -116,164 +122,3 @@ exports.deletePost = async (req, res, next) => {
     }
 };
 
-//!AUTHENTITICATION
-exports.postLogin =  async (req, res, next) => {
-    const email = req.body.email.toLowerCase();
-    const password = req.body.password;
-
-    const errors = validationResult(req);
-    if (!errors.isEmpty()) {
-        return res.status(422).json({
-            success: false,
-            message: errors.array()[0].msg,
-            oldInput: {
-                email: email,
-                password: password
-            },
-            validationErrors: errors.array()
-        });
-    }
-
-    try {
-        const user = await User.findOne({ $or: [{ email: email }, { name: email }] });
-        if (!user) {
-            return res.status(422).json({
-                success: false,
-                message: 'Nombre de usuario, email o contraseñas incorrectas.',
-                oldInput: {
-                    email: email,
-                    password: password
-                },
-                validationErrors: []
-            });
-        }
-
-        // Compara la contraseña
-        const doMatch = await bcrypt.compare(password, user.password);
-        if (doMatch) {
-            req.session.isLoggedIn = true;
-            req.session.user = user;
-
-            // Guarda la sesión
-            await new Promise((resolve, reject) => {
-                req.session.save(err => {
-                    if (err) {
-                        console.log('Error al guardar la sesión:', err);
-                        return reject(err);
-                    }
-                    resolve();
-                });
-            });
-
-            // Enviar respuesta JSON al frontend
-            return res.status(200).json({
-                success: true,
-                message: 'Login successful!',
-                user: {
-                    _id: user._id,
-                    name: user.name,
-                    email: user.email,
-                    posts: user.posts,
-                    bookmark: user.bookmark
-                }
-            });
-        } else {
-            return res.status(422).json({
-                success: false,
-                message: 'Nombre de usuario, email o contraseñas incorrectas.',
-                oldInput: {
-                    email: email,
-                    password: password
-                },
-                validationErrors: []
-            });
-        }
-    } catch (err) {
-        console.log('Error en el proceso de login:', err);
-        return res.status(500).json({
-            success: false,
-            message: 'An internal server error occurred'
-        });
-    }
-};
-
-
-exports.postSignup = async (req, res, next) => {
-    console.log('Received SIGNUP request:', req.body);
-  
-    // Extraer los datos del cuerpo de la solicitud
-    const { user, password } = req.body;
-  
-    try {
-      // Hash de la contraseña usando bcrypt
-      const hash = await bcrypt.hash(password, 10);
-  
-      // Crear un nuevo usuario con el email y la contraseña hasheada
-      const newUser = new User({
-        email: user.email,
-        name: user.name, 
-        password: hash,
-        posts: user.posts || [], 
-        bookmark: user.bookmark || []
-      });
-      
-      const existingUser = await User.findOne({ email: user.email });
-      if (existingUser) {
-        return res.status(409).json({
-          error: 'User already exists'
-        });
-      }
-
-      // Guardar el nuevo usuario en la base de datos
-      const result = await newUser.save();
-  
-      // Responder con éxito
-      res.status(201).json({
-        message: 'User created!',
-        result: result
-      });
-    } catch (err) {
-      console.error('Error during user signup:', err);
-      res.status(500).json({
-        error: err.message || 'Internal server error'
-      });
-    }
-  };
-  
-
-  exports.postLogout = (req, res, next) => {
-    req.session.destroy(err => {
-      if (err) {
-        console.log(err);
-        return next(err);  
-      }
-      res.clearCookie('csrfToken');  
-      res.redirect('/');  
-    });
-  };
-
-  //! COMPROBAR SI FUNCIONA
-exports.putBookmark = async (req, res, next) => {
-    console.log('PUT request received en la API! Añadiendo a favoritos->', req.body);
-    const postId = req.body.postId;
-    const userId = req.body.userId;
-    try {
-        const user = await User.findById(userId);
-        if (!user) {
-            return res.status(404).json({ error: 'User not found' });
-        }
-
-        if (user.bookmark.includes(postId)) {
-            user.bookmark.pull(postId);
-            await user.save();
-            return res.status(200).json({ message: 'Bookmark eliminado correctamente!' });
-        }
-
-        user.bookmark.push(postId);
-        await user.save();
-        res.status(200).json({ message: 'Bookmark added successfully!', user });
-    } catch (error) {
-        console.error('An error occurred:', error);
-        res.status(500).json({ error: 'An internal server error occurred' });
-    }
-}

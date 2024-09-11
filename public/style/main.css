@@ -75,14 +75,14 @@ body p{
     background-repeat: no-repeat;
 }
 
-.body-index aside {
+.body-index aside, .publicaciones {
     list-style-type: circle;
     float: right;
-    margin: 10px;
+    margin: 20px;
     margin-right: 5%;
     padding: 10px;
     vertical-align: top;
-    max-width: 25%;
+    max-width: 30%;
     height: auto;
     width: auto;
     background-color:rgb(234, 229, 229);
@@ -702,33 +702,34 @@ nav ul li:hover ul {
 
 }
 
-.proyecto1{
+.proyectos{
     font-family: "Roboto", sans-serif;
+    margin: 20px 10%;
 }
-.proyecto1 h1{
+.proyectos h1{
     text-align: center;
     font-size: 48px;
     margin-top: 20px;
     margin-bottom: 20px;
 }
-.proyecto1 h2{
+.proyectos h2{
     text-align: center;
     font-size: 36px;
     margin-bottom: 20px;
 }
-.proyecto1 h3{
+.proyectos h3{
     text-align: center;
     font-size: 26px;
 }
 .proyecto {
-    display: inline-block;
+    display: inline;
     flex-wrap: wrap;
     max-width: 1000px;
-    margin: auto;
-    padding: 0px 30px 0px 30px;
     text-align: left;
     font-size: 18px;
 }
+
+
 .proyecto img {
     min-width: 200px;
     width: 30%;
@@ -921,6 +922,22 @@ nav ul li:hover ul {
 
     .ocultar-small-screen{
         display:none;
+    }
+
+    .proyectos{
+        margin: 20px 5%;
+    }
+
+    .publicaciones{
+        float: none;
+        display: block;
+        margin: 20px 5%;
+        min-width: 90%;
+
+        padding: 10px;
+        max-width: 95%;
+        height: auto;
+        width: auto;
     }
 
     #section-1{

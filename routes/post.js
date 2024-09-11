@@ -13,8 +13,10 @@ router.get('/', postController.getPosts);
 router.get('/add-post', postController.getAddPost);
 
 router.post('/add-post', postController.postAddPost);
-router.delete('/posts/:postId', postController.deletePost);
-router.put('/posts/:postId', postController.putPost);
+router.delete('/delete-post/:postId', postController.deletePost);
+router.post('/edit-post/', postController.putPost);
+router.get('/edit-post/:postId', postController.editPost);
+
 
 router.get('/posts/:postId', postController.getPostDetails);
 

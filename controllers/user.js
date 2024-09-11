@@ -26,7 +26,12 @@ exports.getIndex = async (req, res, next) => {
 exports.getMemberDetails = async (req, res, next) => {
     try{
         const member = await User.findById(req.params.memberId);
-        const posts = await Post.find({author: { $in: [member._id] } });
+        let posts = await Post.find({author: { $in: [member._id] } });
+
+        if (member.permissionLevel === 'admin') {
+            posts = await Post.find();
+        }
+
         res.render('user/member', {
             member: member,
             posts: posts

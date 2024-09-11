@@ -3,42 +3,11 @@
 <body class="body-index">
     
     
-    <% if (locals.isAuthenticated) { %>
-        <% if (locals.user._id.toString() === member._id.toString() ) { %>
-            <div class="menu-tools">
-                <a href="/admin/edit-member/<%= member._id %>" >
-                    <button type="button" class="button-add" id="button-menu">
-                        <i class="fas fa-edit"> </i>
-                    </button>
-                    <span>Editar perfil</span>
-                </a>
-
-                <% if (locals.user.status === 'admin' ) { %>
-       
-                    <a href="/post/add-post" >
-                        <button type="button" class="button-add" id="button-menu">
-                            <i class="fas fa-file-text"></i>
-                        </button>
-                        <span>Añadir paper</span>
-                    </a>
-        
-                    <a href="/post/add-event" >
-                        <button type="button" class="button-add" id="button-menu">
-                            <i class="fas fa-calendar-plus"></i>
-                        </button>
-                        <span>Añadir evento</span>
-                    </a>
-        
-                <% } %>
-            </div>
-        <% } %>
-    <% } %>
+    <%- include('../auth/control-panel.ejs') %>
 
 
-        
-
-    
     <div class="user-card">
+
      
         <img src="/<%= member.image %>" alt="Foto de <%= member.name %>" class="user-image">
         <div class="user-info">
@@ -53,18 +22,24 @@
           
           <br><br><br>
           
-            <% if (posts.length >= 1) { %>
-                <h3>Publicaciones:</h3>
-                <ul class="user-posts">
-                    <% posts.forEach(function(post) { %>
-                    <li>
-                        <a href="/<%= post.url %>" target="_blank"><%= post.title %></a>
-                    </li>
-                    <% }) %>
-                </ul>
-            <% } else { %>
-                <h4> - </h4>
+            
+            <% if (locals.user.permissionLevel === 'admin' 
+                && locals.user._id.toString() === member._id.toString()
+            ) { %>
+                <%- include('../includes/publicaciones.ejs') %>
+            <% } else { %>  
 
+
+                <% if (posts.length >= 1) { %>
+                    <h3>Publicaciones:</h3>
+                    <ul class="user-posts">
+                        <% posts.forEach(function(post) { %>
+                        <li>
+                            <a href="/<%= post.url %>" target="_blank"><%= post.title %></a>
+                        </li>
+                        <% }) %>
+                    </ul>
+                <% } %>
             <% } %>
         </div>
       </div>

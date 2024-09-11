@@ -1,0 +1,28 @@
+<ul class="papers">
+    <h2>Publicaciones:</h2>
+    <% posts.forEach(function(post) { %>
+
+        <li>
+            <% if (locals.isAuthenticated && locals.user.permissionLevel === 'admin') { %>
+                <form action="/post/delete-post/<%= post._id %>" method="post" style="display:inline">
+                    <input type="hidden" name="post" value="<%= post._id %>">
+                    <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                    <button type="submit" >
+                        <i class="fas fa-trash"></i>
+                    </button>
+                </form> 
+
+                <a href="/post/edit-post/<%= post._id %>" >
+                    <button type="button">
+                        <i class="fas fa-edit"></i>
+                    </button>
+                </a>
+            <% } %>
+
+            <a href="/<%= post.url %>" target="_blank">
+                <%= post.title %>
+            </a>
+
+        </li>
+    <% }) %>
+</ul>

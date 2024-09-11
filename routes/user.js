@@ -60,7 +60,6 @@ router.get('/noticias', (req, res) => {
 });
 
 
-router.get('/recipe-details/:recetaId', userController.getRecipeDetails);
 
 //Los controllers se ejecutarán en orden. Si el primero da el NEXT (porque está autentificado el usuario), pasará al siguiente
 router.get('/bookmark', isAuth, userController.getBookmark);
