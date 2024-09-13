@@ -23,11 +23,7 @@
           <br><br><br>
           
             
-            <% if (locals.user.permissionLevel === 'admin' 
-                && locals.user._id.toString() === member._id.toString()
-            ) { %>
-                <%- include('../includes/publicaciones.ejs') %>
-            <% } else { %>  
+    
 
 
                 <% if (posts.length >= 1) { %>
@@ -40,7 +36,7 @@
                         <% }) %>
                     </ul>
                 <% } %>
-            <% } %>
+           
         </div>
       </div>
     
