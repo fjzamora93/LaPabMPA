@@ -172,7 +172,9 @@ exports.postEditMember = async (req, res, next) => {
         console.log("usuario encontrado: ", member);
         member.email = email;
         member.name = name;
-        member.password = await bcrypt.hash(password, 12);;
+        if (member.password.length > 4){
+            member.password = await bcrypt.hash(password, 12);;
+        }
         member.cargo = cargo;
         member.descripcion = descripcion;
         member.status = status;
