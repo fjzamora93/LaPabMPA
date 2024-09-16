@@ -1,0 +1,64 @@
+<%- include('../includes/navigation.ejs') %>
+
+<link rel="stylesheet" href="/style/form.css">
+
+<!-- JavaScript de Select2 -->
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js"></script>
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/css/select2.min.css" rel="stylesheet" />
+
+<body class="body-index">
+    <div class="container">
+        <form action="/post/add-event" method="POST" enctype="multipart/form-data">
+            <!-- Campo CSRF -->
+            <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+        
+            <!-- Título -->
+            <label for="title">Título*:</label>
+            <input type="text" id="title" name="title" required><br>
+        
+           
+            <!-- Contenido -->
+            <label for="content">Contenido:</label>
+            <textarea id="content" name="content" rows="5" placeholder="Resumen o abstract del evento"></textarea><br>
+        
+            <!-- Lugar -->
+            <label for="place">Localización:</label>
+            <textarea id="place" name="place" rows="1" placeholder="Escribe el lugar dónde se hará el evento (ciudad)"></textarea><br>
+        
+            <!-- URL -->
+            <label for="url">URL del evento:</label>
+            <input type="url" id="url" name="url"  placeholder="¿Quieres añadir la URL del evento o la página web?"></textarea><br>
+        
+        
+            <!-- Archivo adjunto
+                <label for="attachedFile">Archivo adjunto:</label>
+                <input type="file" id="attachedFile" name="attachedFile"><br>
+            -->
+
+            <!-- Fecha -->
+            <label for="date">Fecha de publicación:</label>
+            <input type="date" id="date" name="date"><br>
+        
+        
+        
+            <!-- Botón para enviar el formulario -->
+            <button type="submit">Crear Post</button>
+        </form>
+    
+    </div>
+</body>
+
+ <!--- FOOTER (PIE DE PÁGINA)-->
+ <%- include('../includes/footer') %>
+</html>
+
+
+
+<script>
+    $(document).ready(function() {
+        $('#author').select2({
+            placeholder: 'Selecciona autores',
+            allowClear: true
+        });
+    });
+</script>
