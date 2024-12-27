@@ -23,13 +23,13 @@
 
             <label for="name">Nombre completo:</label>
             <input type="text" id="name" name="name" 
-            placeholder="Introduce el nombre comopleto"
-            value="<% if (editing || hasError) { %><%= member.name %><% } %>"
+            placeholder="Introduce el nombre completo"
+            value="<% if (editing ) { %><%= member.name %><% } %>"
             class="<%= validationErrors.find(e => e.path === 'name') ? 'invalid' : '' %>" required>
                  
             <label for="email">Email :</label>
             <input type="text" id="email" name="email" 
-                value="<% if (editing || hasError) { %><%= member.email %><% } %>" 
+                value="<% if (editing ) { %><%= member.email %><% } %>" 
                 class="<%= validationErrors.find(e => e.path === 'email') ? 'invalid' : '' %>">
 
             
@@ -45,16 +45,16 @@
             <label for="cargo">Cargo / Ocupación:</label>
             <input type="text" id="cargo" name="cargo" 
             placeholder="Título del que dispone, cargo que ocupa o titulación que está cursando"
-            value="<% if (editing || hasError) { %><%= member.cargo %><% } %>" 
+            value="<% if (editing ) { %><%= member.cargo %><% } %>" 
             class="<%= validationErrors.find(e => e.path === 'cargo') ? 'invalid' : '' %>">
 
             <label for="descripcion">Descripción:</label>
-            <textarea id="descripcion" name="descripcion" rows="5" required><% if (editing || hasError) { %><%= member.descripcion.trim() %><% } %></textarea>
+            <textarea id="descripcion" name="descripcion" rows="5" required><% if (editing) { %><%= member.descripcion.trim() %><% } %></textarea>
 
            
             <!-- TÍTULO DE LAS PUBLICACIONES -->
             <label for="posts">Publicaciones:</label>
-            <span> Selecciona varias publicaciones pulsando Shift (Mayús) y haciendo click normal</span>
+            <span> Selecciona varias publicaciones pulsando Shift (Mayús) y haciendo click normal --</span>
             <select id="posts" name="posts" multiple>
                 <% for (let post of posts) { %>
                     <option value="<%= post._id %>"><%= post.title %></option>
@@ -65,7 +65,7 @@
             <label for="image"> Url de la imagen (preferiblemente URL de imagen linkedin):</label>
             <input type="text" id="image" name="image" 
                 placeholder="Introduce la URL de la imagen"
-                value="<% if (editing || hasError) { %><%= member.image %><% } %>" 
+                value="<% if (editing ) { %><%= member.image %><% } %>" 
                 class="<%= validationErrors.find(e => e.path === 'image') ? 'invalid' : '' %>">
             
             <label for="status"> Seleciona el status del miembro:</label>

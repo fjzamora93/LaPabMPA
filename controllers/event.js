@@ -36,17 +36,14 @@ exports.getAddEvent = async (req, res, next) => {
 
 // POST CONTENT 
 exports.onPostEvent = async (req, res, next) => {
+    const { title, content, description, date, status, url } = req.body;
     try{
-        const { title, content, date } = req.body;
-        const newPost = new Post({ title, content, date, place, url });
-
+        const newPost = new Post({ title, content, description, date, status, url });
         await newPost.save();
-        console.log('New post created:', newPost);
-
         res.redirect('/');
        
     } catch (error) {
-        res.status(500).json({ error: 'An internal server error occurred' });
+        res.status(500).json({ error: 'No se ha podido añadir el evento' });
         };
     };
 

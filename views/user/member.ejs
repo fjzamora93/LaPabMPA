@@ -8,8 +8,13 @@
 
     <div class="user-card">
 
-     
-        <img src="/<%= member.image %>" alt="Foto de <%= member.name %>" class="user-image">
+    
+        <% if (member.image.startsWith('images')) { %>
+            <img src="/<%= member.image %>" alt="Foto de <%= member.name %>" class="user-image">
+        <% } else { %>
+            <img src="<%= member.image %>" alt="Foto de <%= member.name %>" class="user-image">
+        <% } %>
+
         <div class="user-info">
           <h2 class="user-name"><%= member.name %></h2>
           

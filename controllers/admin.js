@@ -55,45 +55,62 @@ exports.getAddMember = async (req, res, next) =>{
         res.status(500).json({ error: 'An internal server error occurred' });
 }}
 
-exports.postAddUser = async (req, res, next) => {
-    const { name, email, cargo, descripcion, 
-        posts, image, status } = req.body;
-    
 
-    const renderError = (message, validationErrors = []) => {
-        res.status(422).render('forms/edit-member', {
-            editing: false,
-            hasError: true,
-            user: { name, email, cargo, descripcion, 
-                posts, image},
-            errorMessage: message,
-            validationErrors
-        });
+exports.postAddUser = async (req, res, next) => {
+    const { name, email, cargo, descripcion, posts = [], image = "", status } = req.body;
+
+    // Inicializar todos los posts disponibles
+    let allPosts = [];
+    allPosts = await Post.find();
+    console.log('allPosts:', allPosts);
+    try {
+        allPosts = await Post.find();
+    } catch (err) {
+        console.error("Error al cargar publicaciones:", err);
+        return res.status(500).json({ error: "Error al cargar publicaciones" });
+    }
+
+    // Función para manejar errores y renderizar la vista con datos
+    const renderError = async (message, validationErrors = []) => {
+        try {
+            res.status(422).render('forms/edit-member', {
+                editing: false,
+                hasError: true,
+                user: { name, email, cargo, descripcion, posts, image },
+                errorMessage: message,
+                validationErrors,
+                posts: allPosts, // Pasar todas las publicaciones para la lista desplegable
+                usuario: req.session.user // Asegúrate de pasar el usuario a la vista
+            });
+        } catch (err) {
+            console.error("Error al renderizar el formulario:", err);
+            res.status(500).json({ error: "Error interno del servidor" });
+        }
     };
 
+    // Validación de errores
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-        console.log(errors.array());
-        return renderError(errors.array().map(error => ({ field: error.param, msg: error.msg })), errors.array());
+        console.log("Errores de validación:", errors.array());
+        return renderError("Errores en el formulario", errors.array());
     }
 
     try {
-        // const imgurLink = await uploadImageToImgur(image.path);
-
         const password = await bcrypt.hash(email, 12);
         const permissionLevel = 'user';
-        const bookmark = posts;
+        const bookmark = posts; // Los posts seleccionados en el formulario
 
         const newUser = new User({
-            email, name, permissionLevel,  password, cargo,
+            email, name, permissionLevel, password, cargo,
             descripcion, bookmark, image, status
         });
 
-        const posts = await Post.find({ _id: { $in: member.bookmark } }); 
-        if (posts.length > 0) {
-            for (let post of posts) {
-                post.author.push(newUser._id);
-                await post.save(); 
+        // Actualizar las publicaciones para incluir al nuevo usuario como autor
+        const userPosts = await Post.find({ _id: { $in: bookmark } });
+        if (userPosts.length > 0) {
+            for (let post of userPosts) {
+                post.author.push(newUser._id); // Agregar autor al post
+                await post.save();
             }
         }
 
@@ -103,10 +120,11 @@ exports.postAddUser = async (req, res, next) => {
         res.redirect('/');
 
     } catch (error) {
-        console.error('Error al subir algo:', error);
-        renderError('Error al subir algo');
+        console.error('Error al guardar el usuario:', error);
+        renderError('Error al guardar el usuario');
     }
 };
+
 
 exports.getEditMember = async (req, res, next) => {
     const memberId = req.params.memberId;
