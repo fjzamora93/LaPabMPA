@@ -10,9 +10,10 @@ const { validationResult } = require('express-validator');
 exports.getEvents = async (req, res, next) => {
     console.log('GET request received en la API! ->', req.query);
     try{
-        const posts = await Post.find().sort({ date: -1 });
+        const posts = await Post.find({"status" : "event"}).sort({ date: -1 });
+        console.log("AQUÍ ESTÁN LOS EVENTOS ", posts)
         res.render('sections/calendario', {
-            posts: posts
+            posts: []
         });
     }
     catch {

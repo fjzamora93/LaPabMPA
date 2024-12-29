@@ -16,26 +16,27 @@
         </tr>
       </thead>
       <tbody>
-        <tr>
-          <td>9 – 11 Abril</td>
-          <td>Workshop Marine Heit Weight (Olas de Calor Marinas)</td>
-          <td>Concepción</td>
-        </tr>
-        <tr>
-          <td>27 - 31 Mayo</td>
-          <td>Congreso de Ciencias del Mar</td>
-          <td>Concepción</td>
-        </tr>
-        <tr>
-          <td>19 - 23 Agosto</td>
-          <td><a href="https://scar.org/">SCAR Scientific Committee on Antarctic Research</a></td>
-          <td>Pucón</td>
-        </tr>
-        <tr>
-          <td>4 - 6 Noviembre</td>
-          <td>7º Congreso de Oceanografía Física, Meteorología y Clima del Pacífico Sur Oriental</td>
-          <td>Universidad Arturo Prat <br>Iquique</td>
-        </tr>
+
+        <% if (!posts || posts.length === 0) { %>
+            <tr>
+                <td colspan="3">No hay eventos programados</td>
+            </tr>
+        <% } else { %>
+
+        <% for (let event of posts) { %>
+            <tr>
+              <td><%= event.date %></td>
+              <td>
+                <% if (event.url) { %>
+                  <a href="<%= event.url %>"><%= event.title %></a>
+                <% } else { %>
+                  <%= event.title %>
+                <% } %>
+              </td>
+              <td><%= event.description %></td>
+            </tr>
+          <% } %>
+        <% } %>
       </tbody>
     <table>
   </div>

@@ -1,4 +1,5 @@
 
+//! RECUERDA QUE TODO LO QUE HAY AQUÍ TIENE EL PREFIJO post/ en las rutas
 
 const postController = require('../controllers/post');
 const csrf = require('csurf');
@@ -30,6 +31,7 @@ router.get('/quienes-somos', (req, res) => {
 
 
 //CALENDARIO
+router.get('/eventos', eventController.getEvents);
 router.get('/calendario', eventController.getEvents);
 router.get('/add-event', eventController.getAddEvent);
 router.post('/add-event', eventController.onPostEvent);
