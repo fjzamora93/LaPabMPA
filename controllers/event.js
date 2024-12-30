@@ -8,12 +8,11 @@ const { validationResult } = require('express-validator');
 
 // GET 
 exports.getEvents = async (req, res, next) => {
-    console.log('GET request received en la API! ->', req.query);
     try{
-        const posts = await Post.find({"status" : "event"}).sort({ date: -1 });
+        const posts = await Post.find().sort({ date: -1 });
         console.log("AQUÍ ESTÁN LOS EVENTOS ", posts)
         res.render('sections/calendario', {
-            posts: []
+            posts: posts
         });
     }
     catch {
@@ -37,9 +36,19 @@ exports.getAddEvent = async (req, res, next) => {
 
 // POST CONTENT 
 exports.onPostEvent = async (req, res, next) => {
-    const { title, content, description, date, status, url } = req.body;
+    const { title, content, place, date, url } = req.body;
+     // Convertir la cadena de fecha a un objeto Date
+     const dateObj = new Date(date);
+    
+     // Extraer el día, mes y año
+    const day = dateObj.getDate();
+    const month = dateObj.getMonth() + 1; // Los meses en JavaScript son 0-indexados
+    const year = dateObj.getFullYear();
+    
+    const formattedDate = `${day}/${month}/${year}`;
+
     try{
-        const newPost = new Post({ title, content, description, date, status, url });
+        const newPost = new Post({ title, content, place, formattedDate, url });
         await newPost.save();
         res.redirect('/');
        

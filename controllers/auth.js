@@ -43,34 +43,39 @@ exports.getSignup = (req, res, next) => {
   };
 
   exports.postLogin = async (req, res, next) => {
+    console.log("Autentificandoooo");
     const email = req.body.email.toLowerCase();
     const password = req.body.password;
+    let message = "Invalid email or password";
+
 
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-        return res.status(422).json({
-            success: false,
-            message: errors.array()[0].msg,
+        return res.render('auth/login', {
+            path: '/login',
+            pageTitle: 'Login',
+            errorMessage: message,
             oldInput: {
                 email: email,
                 password: password
             },
-            validationErrors: errors.array()
-        });
+            validationErrors: []
+          });
     }
 
     try {
         const user = await User.findOne({ $or: [{ email: email }, { name: email }] });
         if (!user) {
-            return res.status(422).json({
-                success: false,
-                message: 'Nombre de usuario, email o contraseñas incorrectas.',
+            return res.render('auth/login', {
+                path: '/login',
+                pageTitle: 'Login',
+                errorMessage: message,
                 oldInput: {
                     email: email,
                     password: password
                 },
                 validationErrors: []
-            });
+              });
         }
 
         // Compara la contraseña
@@ -93,15 +98,17 @@ exports.getSignup = (req, res, next) => {
             // Enviar respuesta JSON al frontend
             return res.redirect('/');
         } else {
-            return res.status(422).json({
-                success: false,
-                message: 'Nombre de usuario, email o contraseñas incorrectas.',
+            return res.render('auth/login', {
+                path: '/login',
+                pageTitle: 'Login',
+                errorMessage: message,
                 oldInput: {
                     email: email,
                     password: password
                 },
                 validationErrors: []
-            });
+              });
+          
         }
     } catch (err) {
         console.log('Error en el proceso de login:', err);
