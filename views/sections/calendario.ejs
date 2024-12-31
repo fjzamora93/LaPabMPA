@@ -25,6 +25,17 @@
 
         <% for (let event of posts) { %>
             <tr>
+                <td>
+                    <% if (locals.isAuthenticated && (locals.user.permissionLevel === 'superadmin' || locals.user.permissionLevel === 'admin')) { %>
+                        <form action="/post/delete-event/<%= event._id %>" method="post" style="float: right">
+                            <input type="hidden" name="techId" value="<%= tech._id %>">
+                            <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                            <button type="submit" class="button-add" id="button-edit">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </form>
+                    <% } %>
+                </td>
               <td><%= event.date %></td>
               <td>
                 <% if (event.url) { %>
