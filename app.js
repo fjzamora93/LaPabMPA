@@ -169,7 +169,6 @@ app.use(csrfProtection);
 
 // DEVOLVER USUARIO AUTENTIFICADO
 app.use(async (req, res, next) => {
-    console.log('Autentificando usuario...');
     if (!req.session.user) {
       return next();
     }
@@ -190,8 +189,8 @@ app.use((req, res, next) => {
     if (!req.session.csrfToken) {
         req.session.csrfToken = req.csrfToken();
     }
-    console.log('Cookies: ', req.cookies);
-    console.log('CSRF Token 166:', req.session.csrfToken);
+    //console.log('Cookies: ', req.cookies);
+    //console.log('CSRF Token 166:', req.session.csrfToken);
     res.locals.isAuthenticated = req.session.isLoggedIn;
     res.locals.user = req.user; 
     res.locals.csrfToken = req.session.csrfToken;
