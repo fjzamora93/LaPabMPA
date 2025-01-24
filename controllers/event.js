@@ -10,7 +10,6 @@ const { validationResult } = require('express-validator');
 exports.getEvents = async (req, res, next) => {
     try{
         const posts = await Post.find().sort({ date: -1 });
-        console.log("AQUÍ ESTÁN LOS EVENTOS ", posts)
         res.render('sections/calendario', {
             posts: posts
         });
@@ -38,19 +37,14 @@ exports.getAddEvent = async (req, res, next) => {
 exports.onPostEvent = async (req, res, next) => {
     const { title, content, place, date, url } = req.body;
      // Convertir la cadena de fecha a un objeto Date
-     const dateObj = new Date(date);
+     //const dateObj = new Date(date);
     
-     // Extraer el día, mes y año
-    const day = dateObj.getDate();
-    const month = dateObj.getMonth() + 1; // Los meses en JavaScript son 0-indexados
-    const year = dateObj.getFullYear();
-    
-    const formattedDate = `${day}/${month}/${year}`;
-
+     
+    console.log("FECHA FORMATEADA ", date);
     try{
-        const newPost = new Post({ title, content, place, formattedDate, url });
+        const newPost = new Post({ title, content, place, date, url });
         await newPost.save();
-        res.redirect('/');
+        res.redirect('/post/calendario');
        
     } catch (error) {
         res.status(500).json({ error: 'No se ha podido añadir el evento' });
@@ -61,9 +55,9 @@ exports.onPostEvent = async (req, res, next) => {
 // DELETE
 exports.deleteEvent = async (req, res, next) => {
     try{
-        req.params.postId;
-        await Post.findByIdAndDelete(req.params.postId);
-        res.redirect('/');
+        const eventId = req.body.eventId;
+        await Post.findByIdAndDelete(eventId);
+        res.redirect('/post/calendario');
     } catch (error) {
         res.status(500).json({ error: 'An internal server error occurred' });
     };

@@ -1,48 +1,37 @@
 <% if (locals.isAuthenticated) { %>
-    <% if (locals.user._id.toString() === member._id.toString() ) { %>
-
-        
         <% if (locals.user.permissionLevel === 'admin' ) { %>
-            <div style="margin-top: 20px;">
-                <h3> Panel del control del administrador </h3>
-                <p> En este panel tendrás herramientas exclusivas para la actualización del contenido de la web </p>
-            </div>
-        <% } %>
+            
+   
         <div class="menu-tools">
-            <a href="/admin/edit-member/<%= member._id %>" >
+            <a href="/post/add-post" >
                 <button type="button" class="button-add" id="button-menu">
-                    <i class="fas fa-edit"> </i>
+                    <i class="fas fa-file-text"></i>
                 </button>
-                <span>Editar perfil</span>
+                <span>Añadir paper</span>
             </a>
 
-            <% if (locals.user.permissionLevel === 'admin' ) { %>
-   
-                <a href="/post/add-post" >
-                    <button type="button" class="button-add" id="button-menu">
-                        <i class="fas fa-file-text"></i>
-                    </button>
-                    <span>Añadir paper</span>
-                </a>
-    
-                <a href="/post/add-event" >
-                    <button type="button" class="button-add" id="button-menu">
-                        <i class="fas fa-calendar-plus"></i>
-                    </button>
-                    <span>Añadir evento</span>
-                </a>
+            <a href="/post/add-event" >
+                <button type="button" class="button-add" id="button-menu">
+                    <i class="fas fa-calendar-plus"></i>
+                </button>
+                <span>Añadir evento</span>
+            </a>
 
-                <a href="/post/add-content" >
-                    <button type="button" class="button-add" id="button-menu">
-                        <i class="fas fa-flask"></i>
-                    </button>
-                    <span>Añadir Proyecto </span>
-                </a>
-    
-            <% } %>
+            <a href="/post/add-content" >
+                <button type="button" class="button-add" id="button-menu">
+                    <i class="fas fa-flask"></i>
+                </button>
+                <span>Añadir Proyecto </span>
+            </a>
+
+            <a href="/admin/add-member" >
+                <button type="button" class="button-add" id="button-menu">
+                    <i class="fas fa-user"></i>
+                </button>
+                <span>Añadir Miembro </span>
+            </a>
         </div>
 
          
-
-    <% } %>
+        <% } %>
 <% } %>

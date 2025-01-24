@@ -7,35 +7,32 @@
     <h2>Calendario de eventos</h2>
     <br><br>
     
+    <% if (!posts || posts.length === 0) { %>
+      <tr>
+          <td colspan="3">No hay eventos programados</td>
+      </tr>
+  <% } else { %>
+    
     <table class="table">
       <thead>
         <tr>
+          
           <th>Fecha</th>
           <th>Evento</th>
           <th>Lugar</th>
+          <th> </th>
         </tr>
       </thead>
       <tbody>
 
-        <% if (!posts || posts.length === 0) { %>
-            <tr>
-                <td colspan="3">No hay eventos programados</td>
-            </tr>
-        <% } else { %>
+        
 
         <% for (let event of posts) { %>
             <tr>
-           
+              
+          
               <td>
-                <% if (locals.isAuthenticated && (locals.user.permissionLevel === 'superadmin' || locals.user.permissionLevel === 'admin')) { %>
-                    <form action="/post/delete-event/<%= event._id %>" method="post" style="margin: 0px">
-                        <input type="hidden" name="techId" value="<%= event._id %>">
-                        <input type="hidden" name="_csrf" value="<%= csrfToken %>">
-                        <button type="submit" class="button-add" id="button-edit">
-                            <i class="fas fa-trash"></i>
-                        </button>
-                    </form>
-                <% } %>
+                
                 <%= event.date %></td>
               <td>
                 <% if (event.url) { %>
@@ -45,7 +42,19 @@
                   <%= event.title %>
                 <% } %>
               </td>
-              <td><%= event.description %></td>
+
+              <td><%= event.place %></td>
+              <td>
+                <% if (locals.isAuthenticated && (locals.user.permissionLevel === 'superadmin' || locals.user.permissionLevel === 'admin')) { %>
+                  <form action="/post/delete-event/<%= event._id %>" method="post" style="margin: 0px">
+                      <input type="hidden" name="eventId" value="<%= event._id %>">
+                      <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                      <button type="submit" class="button-add" id="button-edit">
+                          <i class="fas fa-trash"></i>
+                      </button>
+                  </form>
+                  <% } %>
+              </td>
             </tr>
           <% } %>
         <% } %>
@@ -53,10 +62,8 @@
     <table>
   </div>
   <div class="maps">
-  <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d102198.27342659904!2d-73.18893339074833!3d-36.82580292837229!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x9669b5cdd2bbc63b%3A0x44cb37b752212698!2zQ29uY2VwY2nDs24sIELDrW8gQsOtbywgQ2hpbGU!5e0!3m2!1ses!2ses!4v1713775923400!5m2!1ses!2ses" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
-  <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d49413.52386374597!2d-72.00037989777486!3d-39.28042034078509!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x96147f42351988d1%3A0x3c5c238b02dc5935!2zUHVjb24sIFB1Y8OzbiwgQXJhdWNhbsOtYSwgQ2hpbGU!5e0!3m2!1ses!2ses!4v1713775904170!5m2!1ses!2ses" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
-  <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d51854.29567624317!2d-70.16716785015544!3d-20.201730343330496!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x91521476da539393%3A0xc408302b4a4aa25e!2sUniversidad%20Arturo%20Prat%2C%20Iquique%2C%20Tarapac%C3%A1%2C%20Chile!5e0!3m2!1ses!2ses!4v1714487126747!5m2!1ses!2ses" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>  
-</div>
+
+  </div>
 
 </body>
 
